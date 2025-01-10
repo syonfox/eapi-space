@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="159.5032mm"
+   height="48.954311mm"
+   viewBox="0 0 159.5032 48.954311"
+   version="1.1"
+   id="svg36"
+   sodipodi:docname="lovo_1.svg"
+   inkscape:version="1.0.2 (e86c870879, 2021-01-15)">
+  <defs
+     id="defs30">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient88">
+      <stop
+         style="stop-color:#cccccc;stop-opacity:1;"
+         offset="0"
+         id="stop84" />
+      <stop
+         style="stop-color:#cccccc;stop-opacity:0;"
+         offset="1"
+         id="stop86" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient88"
+       id="linearGradient90"
+       x1="34.512104"
+       y1="61.311508"
+       x2="213.61711"
+       y2="141.70496"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="238.38421"
+     inkscape:cy="204.14624"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:window-width="1515"
+     inkscape:window-height="1080"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata33">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-19.907112,-55.787389)">
+    <path
+       style="fill:#ff7f2a;stroke-width:0.392017"
+       id="path18"
+       d="m 20.877355,104.7417 c 3.360705,-5.164646 7.497806,-7.107286 11.453229,-9.293496 2.920094,-1.61398 5.608619,-2.382765 8.614178,-3.189935 6.093839,-2.884796 21.443601,-2.919099 29.010365,-2.286569 31.793143,2.37813 61.397153,4.484183 93.080003,2.270333 6.76475,0.129091 13.89478,-0.251563 16.11541,3.760938 l -0.15443,-15.227447 v 0 c -9.73689,8.3322 -13.48688,10.269197 -27.35289,10.412432 -44.20698,0.347427 -46.18674,1.327524 -82.434149,0.991089 -8.889499,-0.74316 -19.424217,-2.242031 -28.224233,-7.185421 -3.126198,-1.75613 -6.076366,-4.9689 -9.052011,-7.81868 -4.267446,-4.086907 -8.455483,-8.982047 -12.025715,-15.706067 l 0.970226,43.272823 z"
+       sodipodi:nodetypes="cscccccsccscccc" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:50.0135px;line-height:1.25;font-family:Timmana;-inkscape-font-specification:Timmana;fill:url(#linearGradient90);fill-opacity:1;stroke:none;stroke-width:0.260487"
+       x="28.242079"
+       y="89.533012"
+       id="text14"
+       transform="scale(0.98451767,1.0157258)"><tspan
+         sodipodi:role="line"
+         id="tspan12"
+         x="28.242079"
+         y="89.533012"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:50.0135px;font-family:Timmana;-inkscape-font-specification:Timmana;stroke-width:0.260487;fill:url(#linearGradient90);fill-opacity:1">Foxi Co.</tspan></text>
+  </g>
+</svg>

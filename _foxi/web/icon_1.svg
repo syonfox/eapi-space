@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="120mm"
+   height="120mm"
+   viewBox="-60 -60 120 120"
+   sodipodi:docname="icon_1.svg"
+   version="1.1"
+   id="svg198"
+   inkscape:version="1.0.2 (e86c870879, 2021-01-15)">
+  <defs
+     id="defs200">
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient88"
+       id="linearGradient90"
+       x1="34.512104"
+       y1="61.311508"
+       x2="213.61711"
+       y2="141.70496"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(2.9895801,0,0,2.9895802,-132.83438,-225.37809)" />
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient88">
+      <stop
+         style="stop-color:#cccccc;stop-opacity:1;"
+         offset="0"
+         id="stop84" />
+      <stop
+         style="stop-color:#cccccc;stop-opacity:0;"
+         offset="1"
+         id="stop86" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.70710678"
+     inkscape:cx="329.95086"
+     inkscape:cy="579.48017"
+     inkscape:document-units="mm"
+     inkscape:current-layer="Template"
+     showgrid="false"
+     units="mm"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:snap-global="true"
+     inkscape:snap-bbox="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:window-width="1920"
+     inkscape:window-height="1056"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-grids="true"
+     id="namedview188"
+     inkscape:document-rotation="0">
+    <sodipodi:guide
+       orientation="1,0"
+       position="226.771653543,226.771653543"
+       id="guide2827" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="226.771653543,226.771653543"
+       id="guide2829" />
+    <inkscape:grid
+       type="xygrid"
+       id="grid3072"
+       empspacing="10"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true"
+       units="mm"
+       dotted="false"
+       spacingx="0.1mm"
+       spacingy="0.1mm" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata2822">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="Template"
+     style="fill:none;stroke:black;stroke-width:0.05">
+    <circle
+       cx="0"
+       cy="0"
+       id="circle191"
+       r="60" />
+    <circle
+       cx="0"
+       cy="0"
+       r="19"
+       id="circle193" />
+    <circle
+       cx="0"
+       cy="0"
+       id="circle195"
+       r="7.5" />
+    <path
+       style="fill:#ff7f2a;stroke-width:1.17197"
+       id="path18"
+       d="m -68.363281,84.211357 c 10.047097,-15.440122 22.415292,-21.2478 34.240346,-27.78365 8.729855,-4.825122 16.767416,-7.123467 25.7527756,-9.536566 18.2180201,-8.624329 64.1073634,-8.726881 86.7288114,-6.835882 95.048148,7.10961 183.551708,13.405824 278.270128,6.787343 20.22376,0.385928 41.53956,-0.752068 48.17831,11.243626 l -0.46168,-45.523674 v 0 c -29.10922,24.90978 -40.32011,30.700588 -81.77366,31.1288 -132.16031,1.038661 -138.07896,3.96874 -246.443493,2.96294 C 49.552388,44.432557 18.058004,39.951562 -8.2503493,25.172902 -17.596369,19.922811 -26.416133,10.317978 -35.312062,1.7983319 -48.069933,-10.419804 -60.590406,-25.054217 -71.2639,-45.156215 l 2.900568,129.367572 z"
+       sodipodi:nodetypes="cscccccsccscccc" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:149.519px;line-height:1.25;font-family:Timmana;-inkscape-font-specification:Timmana;fill:url(#linearGradient90);fill-opacity:1;stroke:none;stroke-width:0.778746"
+       x="-48.402428"
+       y="42.288017"
+       id="text14"
+       transform="scale(0.98451767,1.0157258)"><tspan
+         sodipodi:role="line"
+         id="tspan12"
+         x="-48.402428"
+         y="42.288017"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:149.519px;font-family:Timmana;-inkscape-font-specification:Timmana;fill:url(#linearGradient90);fill-opacity:1;stroke-width:0.778746">Foxi Co.</tspan></text>
+  </g>
+</svg>

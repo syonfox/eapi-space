@@ -1,0 +1,233 @@
+Processing Lua Persistent Data:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 20
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 20
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:
+
+Lua Class: CommodityType
+Number of rows: 18
+Structure of row 1:

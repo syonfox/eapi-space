@@ -1,0 +1,143 @@
+/* Define CSS Variables for Color Scheme */
+:root {
+    --primary-color: #FF6600;  /* Orange */
+    --secondary-color: #007BFF;  /* Blue */
+    --background-color: #f4f4f4;  /* Light Gray */
+    --text-color: #333;  /* Dark Text */
+    --link-color: var(--secondary-color);  /* Blue Links */
+    --link-hover-color: var(--primary-color);  /* Orange on Hover */
+    --button-bg-color: var(--primary-color);  /* Orange Button */
+    --button-text-color: #fff;  /* White Button Text */
+    --button-hover-bg-color: var(--secondary-color);  /* Blue Button Hover */
+    --header-bg-color: #333;  /* Dark Background for Headers */
+    --header-text-color: #fff;  /* White Text for Headers */
+    --code-bg-color: #282C34;  /* Dark Code Background */
+    --code-text-color: #F8F8F2;  /* Light Code Text */
+}
+
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    padding: 20px;
+    max-width: 950px;
+    margin: 0 auto;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--header-text-color);
+    background-color: var(--header-bg-color);
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+h3 {
+    font-size: 1.75rem;
+}
+
+h4 {
+    font-size: 1.5rem;
+}
+
+h5 {
+    font-size: 1.25rem;
+}
+
+h6 {
+    font-size: 1rem;
+}
+
+/* Paragraphs */
+p {
+    margin-bottom: 20px;
+}
+
+/* Links */
+a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--link-hover-color);
+    text-decoration: underline;
+}
+
+/* Buttons */
+button {
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+button:hover {
+    background-color: var(--button-hover-bg-color);
+}
+
+/* Code and Preformatted Text */
+code {
+    background-color: var(--code-bg-color);
+    color: var(--code-text-color);
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+
+pre {
+    background-color: var(--code-bg-color);
+    color: var(--code-text-color);
+    padding: 15px;
+    border-radius: 5px;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/* Images */
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+/* Container for Basic Layout */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Simple Utility Classes */
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-left {
+    text-align: left;
+}
+

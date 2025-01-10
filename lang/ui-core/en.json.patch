@@ -1,0 +1,14 @@
+{
+   "START_AT_SYON": {
+    "description": "You have been hired by FOXI Co. To forge your path among the stars.",
+    "message": "Start on Syon"
+  },
+  "START_AT_SYON_DESC": {
+    "description": "You have been hired by FOXI Co. To forge your path among the stars.",
+    "message": "Congratulations on being accepted to FOXI Co. Here is your ship you are responsible for any damages."
+  },
+    "START_LOG_ENTRY_4": {
+    "description": "First log message as a new recruit joining the corporate fleet, detailing initial challenges and aspirations.",
+    "message": "After a long and challenging journey, I've finally received my assignment to the corporate fleet. It wasn't easy; starting with no money and barely a ship to call my own, but here I am, ready to embark on this new chapter. The ship I've been assigned is a relic, barely space-worthy, missing essential components including a functioning hyperdrive. It seems my predecessors left quite a legacy, or rather, a lack thereof. But despite the setbacks, I see opportunity where others might see defeat. I have a job, a ship, and the determination to carve out a path among the stars. They say adversity builds character; well, I plan to forge mine among the constellations. As I navigate these uncharted waters, I'll remember that every obstacle is a chance to prove my mettle. With perseverance as my fuel, I'll chart a course towards a brighter future, one star at a time."
+  }
+}
