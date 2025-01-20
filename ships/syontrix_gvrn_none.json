@@ -11,13 +11,160 @@
 	"hull_mass": 55,
 	"atmospheric_pressure_limit": 3.2,
 	"capacity": 550,
-	"slots": {
-		"engine": 1,
-		"cabin": 1,
-		"laser_front": 1,
-		"missile": 48,
-		"shield": 10,
-		"cargo": 180
+	"cargo": 180,
+	"equipment_slots": {
+		"utility_s1_2": {
+			"type": "utility",
+			"size": 1,
+			"tag": "tag_utility_s1_2",
+			"hardpoint": true
+		},
+		"missile_bay_1": {
+			"type": "missile_bay.opli_internal",
+			"size": 2,
+			"i18n_key": "HARDPOINT_MISSILE_BAY",
+			"tag": "tag_missile_bay_1",
+			"hardpoint": true,
+			"default": "missile_rack.foxi_internal_s2"
+		},
+		"missile_bay_2": {
+			"type": "missile_bay.opli_internal",
+			"size": 2,
+			"i18n_key": "HARDPOINT_MISSILE_BAY",
+			"tag": "tag_missile_bay_2",
+			"hardpoint": true,
+			"default": false
+		},
+		"missile_bay_3": {
+			"type": "missile_bay.opli_internal",
+			"size": 3,
+			"i18n_key": "HARDPOINT_MISSILE_BAY",
+			"tag": "tag_missile_bay_2",
+			"hardpoint": true,
+			"default": false
+		},
+		"missile_bay_4": {
+			"type": "missile_bay.opli_internal",
+			"size": 4,
+			"i18n_key": "HARDPOINT_MISSILE_BAY",
+			"tag": "tag_missile_bay_2",
+			"hardpoint": true,
+			"default": false
+		},
+		"fuel_scoop_s1": {
+			"type": "fuel_scoop",
+			"size": 1,
+			"tag": "tag_fuel_scoop_s1",
+			"hardpoint": true
+		},
+		"utility_s1_1": {
+			"type": "utility",
+			"size": 1,
+			"tag": "tag_utility_s1_1",
+			"hardpoint": true
+		},
+		"laser_front_s2_1": {
+			"type": "weapon",
+			"size": 4,
+			"size_min": 1,
+			"i18n_key": "HARDPOINT_WEAPON_FRONT",
+			"tag": "tag_laser_front_s2",
+			"hardpoint": true,
+			"gimbal": [4,4]
+		},
+		"laser_front_s2_2": {
+			"type": "weapon",
+			"size": 2,
+			"size_min": 1,
+			"i18n_key": "HARDPOINT_WEAPON_FRONT",
+			"tag": "tag_laser_front_s2",
+			"hardpoint": true,
+			"gimbal": [4,4]
+		},
+
+		"shield_s1_1": {
+			"type": "shield",
+			"size": 1
+		},
+		"shield_s2_1": {
+			"type": "shield",
+			"size": 2
+		},
+		"shield_s3_1": {
+			"type": "shield",
+			"size": 3
+		},
+		"shield_s3_2": {
+			"type": "shield",
+			"size": 3
+		},
+		"hyperdrive": {
+			"type": "hyperdrive",
+			"size": 5,
+			"size_min": 2,
+			"default": 2
+		},
+		"hyperdrive_s2_1": {
+			"type": "hyperdrive",
+			"size": 2,
+			"size_min": 1
+		},
+		"thruster": {
+			"type": "thruster",
+			"size": 1,
+			"count": 32
+		},
+
+		"utility_s2_3": {
+			"type": "utility",
+			"size": 4,
+			"size_min": 1,
+			"tag": "tag_utility_s2_3"
+		},
+
+		"computer_1": {
+			"type": "computer",
+			"size": 3,
+			"size_min": 1
+		},
+		"computer_2": {
+			"type": "computer",
+			"size": 2,
+			"size_min": 1
+		},
+		"computer_3": {
+			"type": "computer",
+			"size": 1,
+			"size_min": 1
+		},
+		"computer_4": {
+			"type": "computer",
+			"size": 1,
+			"size_min": 1
+		},
+		"fuel_scoop_s3": {
+			"type": "fuel_scoop",
+			"size": 3,
+			"size_min": 1,
+			"tag": "tag_fuel_scoop_s3",
+			"hardpoint": false
+		},
+		"cabin_s1_1": {
+			"type": "cabin",
+			"size": 1
+		},
+		"cabin_s1_2": {
+			"type": "cabin",
+			"size": 1
+		},
+		"cabin_s1_3": {
+			"type": "cabin",
+			"size": 1
+		},
+		"cabin_s1_4": {
+			"type": "cabin",
+			"size": 1
+		}
 	},
 	"roles": ["trader", "merchant", "pirate", "syon"],
 	"effective_exhaust_velocity": 18420000,

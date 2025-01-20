@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foxi Stellar Pioneer Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <h1 class="text-center">Foxi Stellar Pioneer Calculator</h1>
+    <h2>Input J2000 Coordinates ie.</h2>
+    <label>RA/Dec (J2000.0): ie. <bold>7h45m17.75s/+28°01'30.1"</bold></label><br>
+    <input id="j2000" placeholder="Ra/Dec (j2000)">
+    <p>Hint: Use <strong>Ctrl + Shift + C</strong> in Stellarium to copy object info. Paste RA and Dec below. Adjust as needed.</p>
+
+    <form id="calculatorForm">
+        <label for="ra">Right Ascension (RA in degrees):</label><br>
+        <input type="input" id="ra" name="ra" required><br><br>
+
+        <label for="dec">Declination (Dec in degrees):</label><br>
+        <input type="input" id="dec" name="dec" required><br><br>
+
+        <h4 for="dist">Distance (Light Years):</h4><br>
+        <input type="input" id="dist" name="dist" required><br><br>
+        <br>
+        <button type="submit">Calculate Sector Position</button>
+    </form>
+
+    <h2>Results</h2>
+    <div id="results">
+        <p>Enter inputs above and click "Calculate" to see the results here.</p>
+    </div>
+</div>
+<script type="module" src="./js/lib/parseDms.js"></script>
+<script type="module" src="./js/lib_astro_crs.js"></script>
+
+
+
+<script>
+    const SECTOR_SIZE = 8;
+
+    // Function to convert equatorial to Cartesian
+    function equatorialToCartesian(ra, dec, dist) {
+        const raRad = (ra * Math.PI) / 180;
+        const decRad = (dec * Math.PI) / 180;
+
+        const x = dist * Math.cos(decRad) * Math.cos(raRad);
+        const y = dist * Math.cos(decRad) * Math.sin(raRad);
+        const z = dist * Math.sin(decRad);
+
+        return { x, y, z };
+    }
+
+    // Function to get sector position
+    function getSectorPos(x, y, z) {
+        function adjustCoord(coord) {
+            const pos = ((coord % SECTOR_SIZE) + SECTOR_SIZE) % SECTOR_SIZE;
+            const sector = Math.floor(coord / SECTOR_SIZE);
+            return { pos, sector };
+        }
+
+        const adjustedX = adjustCoord(x);
+        const adjustedY = adjustCoord(y);
+        const adjustedZ = adjustCoord(z);
+
+        return {
+            sector: [adjustedX.sector, adjustedY.sector, adjustedZ.sector],
+            pos: [adjustedX.pos, adjustedY.pos, adjustedZ.pos]
+        };
+    }
+
+
+
+    const raAdjustValue = document.getElementById('raAdjustValue');
+    const decAdjustValue = document.getElementById('decAdjustValue');
+
+    const j2000Input = document.getElementById('j2000');
+
+    const raInput = document.getElementById('ra')
+    const decInput = document.getElementById('dec')
+    const distInput = document.getElementById('dist')
+
+    j2000Input.addEventListener("input", ()=>{
+
+        let j2000 = j2000Input.value
+        let equ = a.parseStellariumEqu(j2000)
+        raInput.value = equ.ra;
+        decInput.value = equ.dec;
+
+    })
+
+
+    // Event listener for form submission
+    document.getElementById('calculatorForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const ra = parseFloat(document.getElementById('ra').value) ;
+        const dec =parseFloat(document.getElementById('dec').value) ;
+        const dist=parseFloat(document.getElementById('dist').value);
+
+        let pioneer_equ = a.approx_j2000_to_pioneer_equatorial(ra, dec)
+        const cartesian = a.calculateCartesian(pioneer_equ.ra, pioneer_equ.dec, dist);
+        const sectorPos = a.get_sector_pos(cartesian.x, cartesian.y, cartesian.z);
+
+        document.getElementById('results').innerHTML = `
+                <h3>Computed Results</h3>
+                <p><strong>Cartesian Coordinates:</strong>
+                x: ${cartesian.x.toFixed(4)},
+                y: ${cartesian.y.toFixed(4)},
+                z: ${cartesian.z.toFixed(4)}</p>
+
+                <p><strong>Sector:</strong> [${sectorPos.sector.join(', ')}]</p>
+                <p><strong>Position in Sector:</strong>
+                x: ${sectorPos.pos[0].toFixed(4)},
+                y: ${sectorPos.pos[1].toFixed(4)},
+                z: ${sectorPos.pos[2].toFixed(4)}</p>
+
+<pre>
+${JSON.stringify(sectorPos, null, 2)}
+</pre>
+            `;
+    });
+</script>
+</body>
+</html>

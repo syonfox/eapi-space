@@ -6,5 +6,9 @@
     "SYONCANNON_5MW": {
         "description": "",
         "message": "5MW rapid-mining cannon developer by foxicorp"
+    },
+    "MISSILE_FOXI": {
+        "description": "",
+        "message": "Missile Foxi"
     }
 }

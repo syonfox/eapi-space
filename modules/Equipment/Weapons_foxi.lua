@@ -40,16 +40,16 @@ Equipment.Register("laser.syoncannon_5mw", LaserType.New {
 -- Missiles
 --===============================================
 
----- Approximately equivalent in size to an R73 / AA-11 'Archer'
+------ Approximately equivalent in size to an R73 / AA-11 'Archer'
 --Equipment.Register("missile.foxi_s2", EquipType.New {
 --	l10n_key="MISSILE_GUIDED",
---	price=60, purchasable=true, tech_level=5,
---	missile_type="missile_guided",
---	volume=0, mass=0.145,
+--	price=90, purchasable=true, tech_level=4,
+--	missile_type="missile_smart",
+--	volume=0, mass=0.150,
 --	slot = { type="missile", size=2, hardpoint=true },
---	icon_name="equip_missile_guided"
+--	icon_name="equip_missile_smart"
 --})
---
+
 
 --===============================================
 -- Internal Missile Bays

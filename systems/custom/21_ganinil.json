@@ -325,12 +325,18 @@
 	"longDesc": "This system's abundant gas giants and prime location, situated exactly halfway between Sol and Syon570, make it the ideal spot for a refueling station.\n\nFoxi Co has established a state-of-the-art refueling station here, catering specifically to FCGN comms network relay shuttles.",
 	"name": "Ganinil23",
 	"posf": [
-		0.0319,0.3084,0.5578
+		0,0.3084,0.5578
 	],
-	"pos": [
+	"poso": [
 		0.2552,
 		2.4672,
 		4.4624
+	],
+
+	"pos": [
+		5.2552,
+		7.4672,
+		2.4624
 	],
 	"sector": [
 		4,
