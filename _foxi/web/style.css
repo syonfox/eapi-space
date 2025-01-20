@@ -13,6 +13,17 @@
     --header-text-color: #fff;  /* White Text for Headers */
     --code-bg-color: #282C34;  /* Dark Code Background */
     --code-text-color: #F8F8F2;  /* Light Code Text */
+
+/*From free.wxl.app input*/
+    --color-light: #f4f3eff0;
+    --color-dark: #212121;
+    --color-signal: #fab700;
+    --color-background: #f4f3ef;
+    --color-text: var(--color-dark);
+    --color-accent: var(--color-signal);
+    --size-bezel: .5rem;
+    --size-radius: 12px;
+    --color-shadow: #313133;
 }
 
 /* Basic Reset */
@@ -141,3 +152,68 @@ img {
     text-align: left;
 }
 
+
+
+
+.input {
+    position: relative;
+    display: block;
+    margin-top: 10px;
+}
+
+.input__label {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: calc(var(--size-bezel) * 0.75) calc(var(--size-bezel) * .5);
+    margin: calc(var(--size-bezel) * 0.75 + 3px) calc(var(--size-bezel) * .5);
+    background: pink;
+    white-space: nowrap;
+    transform: translate(3px, 0);
+    transform-origin: 0 0;
+    background: var(--color-background);
+    transition: transform 120ms ease-in;
+    font-weight: bold;
+    line-height: 1.2;
+    -moz-transform: translate(3px, 0);
+    border-radius: calc(2 * var(--size-radius));
+}
+
+.input__field {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    border: 3px solid currentColor;
+    padding: calc(var(--size-bezel) * 1.5) var(--size-bezel);
+    color: currentColor;
+    background: transparent;
+    border-radius: var(--size-radius);
+}
+
+.input__field:not(:-moz-placeholder-shown) + .input__label {
+    transform: translate(0.25rem, -65%) scale(0.8);
+    -moz-transform: translate(0.25rem, -65%) scale(0.8);
+    color: var(--color-accent);
+}
+
+.input__field:not(:-ms-input-placeholder) + .input__label {
+    transform: translate(0.25rem, -65%) scale(0.8);
+    color: var(--color-accent);
+}
+
+.input__field:focus + .input__label,
+.input__field:not(:placeholder-shown) + .input__label
+    /*.input__field:valid + .input__label*/
+{
+    transform: translate(0.25rem, -65%) scale(0.8);
+    /*-moz-transform: translate(0.25rem, -35%) scale(0.8);*/
+    color: var(--color-accent);
+}
+
+.input__select_label_fix {
+    transform: translate(3px, 0) !important;
+    /*transform-origin: 0 0;*/
+    /*background: purple;*/
+
+    color: var(--color-text) !important;
+}
