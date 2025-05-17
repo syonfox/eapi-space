@@ -91,6 +91,7 @@ wget https://github.com/syonfox/eapi-space/raw/refs/heads/main/_dev/honk.zip
 
 ![cat-face.png](./_foxi/web/img/cat-face.png)
 
+**Use F9-F12 to trigger honk sound in game.**
 
 you can patch language files as per https://github.com/pioneerspacesim/pioneer/issues/5996#event-15861212915
 
