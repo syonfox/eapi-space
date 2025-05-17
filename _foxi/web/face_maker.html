@@ -203,5 +203,157 @@
         }
     }
 </script>
+
+
+
+<style>
+  body { font-family: sans-serif; margin: 1rem; }
+  iframe { width: 400px; height: 150px; border: 1px solid #ccc; }
+</style>
+
+<h3>Parent Page</h3>
+<label>Upload file to send to iframe:</label>
+<input type="file" id="fileInput" />
+
+<iframe id="fibIframe" srcdoc='
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>body { font-family: sans-serif; padding: 10px; }</style>
+  </head>
+  <body>
+    <h4>Iframe</h4>
+    <label>Upload file to send to parent:</label>
+    <input type="file" id="iframeFileInput" />
+
+    <script>
+      // Fibonacci helper
+      function fibonacci(n = 9) {
+        const fib = [0,1];
+        for(let i=2; i<n; i++) fib.push(fib[i-1] + fib[i-2]);
+        return fib;
+      }
+
+      // Log helper
+      function log(msg) {
+        console.log("Iframe:", msg);
+      }
+
+      window.addEventListener("message", (event) => {
+        const data = event.data;
+        if(data === "ping") {
+          log("Received ping from parent");
+          event.source.postMessage("pong", event.origin);
+        } else if(data.type === "fibonacci") {
+          log("Received fibonacci from parent: " + data.nums.join(", "));
+          event.source.postMessage({
+            type: "fibonacci",
+            nums: data.nums.slice().reverse()
+          }, event.origin);
+        } else if(data.type === "file") {
+          log("Received file from parent: " + data.name + " (" + data.size + " bytes)");
+          // Confirm receipt
+          event.source.postMessage({
+            type: "file-ack",
+            name: data.name,
+            status: "Received"
+          }, event.origin);
+        }
+      });
+
+      window.onload = () => {
+        const parentWindow = window.parent;
+        parentWindow.postMessage("ping", "*");
+        parentWindow.postMessage({
+          type: "fibonacci",
+          nums: fibonacci()
+        }, "*");
+        log("Sent ping and fibonacci to parent");
+      };
+
+      document.getElementById("iframeFileInput").addEventListener("change", function() {
+        const file = this.files[0];
+        if(!file) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const base64 = e.target.result.split(",")[1];
+          window.parent.postMessage({
+            type: "file",
+            name: file.name,
+            size: file.size,
+            type: file.type,
+            base64: base64
+          }, "*");
+          log("Sent file to parent: " + file.name);
+        };
+        reader.readAsDataURL(file);
+      });
+    </script>
+  </body>
+</html>
+' sandbox="allow-scripts allow-same-origin"></iframe>
+
+<script>
+    const iframe = document.getElementById('fibIframe');
+
+    function fibonacci(n = 9) {
+        const fib = [0,1];
+        for(let i=2; i<n; i++) fib.push(fib[i-1] + fib[i-2]);
+        return fib;
+    }
+
+    function log(msg) {
+        console.log("Parent:", msg);
+    }
+
+    window.addEventListener("message", (event) => {
+        const data = event.data;
+        if(data === "pong") {
+            log("Received pong from iframe");
+            setTimeout(() => {
+                iframe.contentWindow.postMessage("ping", "*");
+                log("Sent ping to iframe");
+            }, 1000);
+        } else if(data.type === "fibonacci") {
+            log("Received fibonacci from iframe: " + data.nums.join(", "));
+            setTimeout(() => {
+                iframe.contentWindow.postMessage({
+                    type: "fibonacci",
+                    nums: fibonacci()
+                }, "*");
+                log("Sent fibonacci to iframe");
+            }, 1000);
+        } else if(data.type === "file-ack") {
+            log("Iframe acknowledged file '" + data.name + "': " + data.status);
+        } else if(data.type === "file") {
+            log("Received file from iframe: " + data.name + " (" + data.size + " bytes)");
+            // Confirm receipt
+            iframe.contentWindow.postMessage({
+                type: "file-ack",
+                name: data.name,
+                status: "Received"
+            }, "*");
+        }
+    });
+
+    document.getElementById('fileInput').addEventListener('change', function() {
+        const file = this.files[0];
+        if(!file) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const base64 = e.target.result.split(",")[1];
+            iframe.contentWindow.postMessage({
+                type: "file",
+                name: file.name,
+                size: file.size,
+                type: file.type,
+                base64: base64
+            }, "*");
+            log("Sent file to iframe: " + file.name);
+        };
+        reader.readAsDataURL(file);
+    });
+</script>
+
 </body>
 </html>
