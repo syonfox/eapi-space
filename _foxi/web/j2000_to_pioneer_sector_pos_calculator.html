@@ -119,7 +119,7 @@
         const dist=parseFloat(document.getElementById('dist').value);
 
         let pioneer_equ = a.approx_j2000_to_pioneer_equatorial(ra, dec)
-        const cartesian = a.calculateCartesian(pioneer_equ.ra, pioneer_equ.dec, dist);
+        const cartesian = a.calculate_cartesian(pioneer_equ.ra, pioneer_equ.dec, dist);
         const sectorPos = a.get_sector_pos(cartesian.x, cartesian.y, cartesian.z);
 
         document.getElementById('results').innerHTML = `

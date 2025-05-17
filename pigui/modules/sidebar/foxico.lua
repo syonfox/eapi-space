@@ -163,23 +163,12 @@ local function onGameStart()
             msgbox.OK(
                 "Welcome. Once you obtain an syontrix ship the mission computer will be fully intagrated.. Good luck!")
         end)
-
-
-        --Timer:CallAt(Game.time + 15, function ()
-        --     msgbox.OK_CANCEL("",
-        --     function()
-        --     end,
-        --     function()
-        --     end)
-        --end)
-
-        --Timer.CallAt(5, cancelCallback)
-        --msgbox.OK("Welcome. Once you obtain an syontrix ship the mission computer will be fully intagrated.. Good luck!")
     end
     local function cancelCallback()
         FOXI.save_data.joined = 0
         Timer:CallAt(Game.time + 1, okFineThen)
     end
+
 
 
     FOXI.save_data.rewards_given = {};
@@ -633,7 +622,7 @@ end
 local bodyFrame = 0;
 
 local lastFrameTime = 0;  -- stores the initial game time
-local frameCount = 500
+local frameCount = 1000
 
 function module:drawBody()
     bodyFrame=bodyFrame+1
@@ -650,8 +639,7 @@ function module:drawBody()
         -- log the stats
         print("foxico.lua.frame: " .. tostring(bodyFrame))
 
-
-        print("Delta time for the last " .. 500 .. " frames: " .. deltaTime .. " game seconds")
+        print("Delta time for the last " .. frameCount .. " frames: " .. deltaTime .. " game seconds")
 
         -- reset the time for the next 500 frames
         lastFrameTime = currentTime
@@ -707,6 +695,7 @@ function module:drawBody()
         --local missiles = Game.player:GetEquip('missile')
 
         local numAdded = Game.player:AddEquip(Equipment.misc["missile_smart"], 2)
+
         print("Atempting to give player " .. num .. " missiles but gave " .. numAdded)
         return numAdded
     end

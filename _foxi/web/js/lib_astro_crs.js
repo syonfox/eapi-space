@@ -59,6 +59,7 @@ function parseStellariumGal(galStr) {
 }
 
 
+
 // used for convertin right assention in hours mins secs to decimal degrees
 function hms2dd(str) {
 
@@ -126,40 +127,6 @@ function get_sector_pos(x, y, z) {
 function approx_j2000_to_pioneer_equatorial(ra, dec) {
     return {ra: ra+PIONEER_OFFSET_RA, dec: dec}
 }
-function cartesianToEquatorial(x, y, z) {
-    // Calculate distance
-    const dist = Math.sqrt(x * x + y * y + z * z);
-
-    // Calculate declination (in radians)
-    const dec = Math.asin(z / dist);
-
-    // Calculate right ascension (in radians)
-    const ra = Math.atan2(y, x);
-
-    // Return results
-    return {
-        ra: ra,                 // Right Ascension in radians
-        dec: dec,               // Declination in radians
-        dist: dist              // Distance
-    };
-}
-
-function equatorialToCartesian(ra, dec, dist) {
-    // Calculate Cartesian coordinates
-    const x = dist * Math.cos(dec) * Math.cos(ra);
-    const y = dist * Math.cos(dec) * Math.sin(ra);
-    const z = dist * Math.sin(dec);
-
-    // Return results
-    return {
-        x: x,  // X coordinate
-        y: y,  // Y coordinate
-        z: z   // Z coordinate
-    };
-}
-
-
-
 
 // Optional: Function to convert radians to degrees
 function radiansToDegrees(rad) {
@@ -169,17 +136,6 @@ function degreesToRadians(deg) {
 
     return deg * (Math.PI / 180);
 }
-
-// Example usage:
-// const position = parse_sector_pos()
-// const result = cartesianToEquatorial(position.x, position.y, position.z);
-//
-// console.log("Pioneer Sec Pos Parse Results Galiese 251")
-// console.log("RA (radians):", result.ra);
-// console.log("RA (degrees):", radiansToDegrees(result.ra));
-// console.log("Dec (radians):", result.dec);
-// console.log("Dec (degrees):", radiansToDegrees(result.dec));
-// console.log("Distance:", result.dist);
 
 
 function parseStellariumEqu(equStr) {
@@ -198,19 +154,14 @@ function parseStellariumEqu(equStr) {
     return {ra, dec};
 }
 
-//stelariums
-const equStr = "6h54m47.48s/+33°15'56.1\"";
-const equCoords = parseStellariumEqu(equStr);
-console.log("Equatorial Coordinates From Stellarium (RA, Dec):", equCoords);
+// //stelariums
+// const equStr = "6h54m47.48s/+33°15'56.1\"";
+// const equCoords = parseStellariumEqu(equStr);
+// console.log("Equatorial Coordinates From Stellarium (RA, Dec):", equCoords);
+//
 
 
-
-
-
-
-
-
-function calculateAngles(x, y, z) {
+function calculate_angles(x, y, z) {
     // Angle in the XY plane (radians)
     const thetaXY = Math.atan2(y, x);
 
@@ -225,7 +176,7 @@ function calculateAngles(x, y, z) {
         thetaXZDegrees: radiansToDegrees(thetaXZ)  // XZ angle in degrees
     };
 }
-function calculateCartesian(thetaXYDegrees, thetaXZDegrees, dist = 1) {
+function calculate_cartesian(thetaXYDegrees, thetaXZDegrees, dist = 1) {
     // Convert angles from degrees to radians if needed
     const thetaXY = degreesToRadians(thetaXYDegrees);
     const thetaXZ = degreesToRadians(thetaXZDegrees);
@@ -319,8 +270,8 @@ const a = {
     parseStellariumEqu,
     parseStellariumGal,
     parse_sector_pos,
-    calculateAngles, // this seems to corectly coraspond to pioneer???
-    calculateCartesian, // invert above i hope
+    calculate_angles, // this seems to corectly coraspond to pioneer???
+    calculate_cartesian, // invert above i hope
     get_sector_pos,
     approx_j2000_to_pioneer_equatorial,
     equatorialToCartesian,

@@ -1,0 +1,30 @@
+ρ Gem - 62 Gem - HIP 36366 - SAO 60118 - HD 58946 - HR 2852 - WDS J07291+3147AB
+Type: double star
+Magnitude: 4.15
+Absolute Magnitude: 2.87
+Color Index (B-V): 0.32
+RA/Dec (J2000.0): 7h29m06.96s/+31°47'09.8"
+Gal. long./lat.: -172°52'03.1"/+21°20'45.9"
+Supergal. long./lat.: +36°10'57.4"/-41°48'22.5"
+Ecl. long./lat. (J2000.0): +109°05'21.3"/+9°48'40.9"
+IAU Constellation: Gem
+Distance: 58.86±0.25 ly
+Proper motion: 274.2 mas/yr towards 43.3°
+Proper motions by axes: 188.2 199.4 (mas/yr)
+Parallax: 55.410±0.240 mas
+Spectral Type: F1V
+Position angle (1935): 8.20°
+Separation (1935): 3.360"
+
+{
+  "sector": [
+    4,
+    2,
+    2
+  ],
+  "pos": [
+    5.075182287181072,
+    0.4408420071927317,
+    3.73400259380481
+  ]
+}

@@ -1,11 +1,15 @@
 -- Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
 -- Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
-local EquipTypes = require 'EquipType'
+--local EquipTypes = require 'Equipment/Types'
+
+local EquipType = require 'EquipType'
+
+
 local Equipment  = require 'Equipment'
 local Slot      = require 'HullConfig'.Slot
+local EquipTypes = require '.Types'
 
-local EquipType = EquipTypes.EquipType
 local LaserType = EquipTypes.LaserType
 
 --===============================================
@@ -16,7 +20,7 @@ Equipment.Register("laser.syoncannon_5mw", LaserType.New {
 	l10n_key="SYONCANNON_5MW",
 	price=13700, purchasable=true, tech_level=5,
 	mass=6, volume=6, capabilities={},
-	slot = { type="weapon.mining", size=2, hardpoint=true },
+	slot = { type="weapon.mining", size=2, hardpoint=false },
 	laser_stats = {
 		lifespan=8, speed=1500, damage=5500, rechargeTime=0.75, length=60,
 		width=8, beam=0, dual=0, mining=1, rgba_r = 10, rgba_g = 199, rgba_b = 10, rgba_a = 200

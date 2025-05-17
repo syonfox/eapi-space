@@ -130,3 +130,11 @@ for i = 0, 4 do
     print("Total Units: " .. calculateTotalUnits(level))
     print()
 end
+
+
+
+-- TODO: make system defence simulation.
+
+-- fibanochi waves increase untill player is foreced out of the system for 2 years..
+-- waves every year. 1, 2, 3, 5, 8, 13, 21, 34, 55
+

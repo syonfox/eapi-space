@@ -1,96 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Local Mod Manager / Pioneer Config Editor</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; max-width: 700px; }
+    code, pre { background: #f3f3f3; padding: 10px; border-radius: 5px; display: block; white-space: pre; }
+    input[type="file"] { margin-top: 10px; }
+    #output { margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h2>Local Mod Manager / Pioneer Config Editor</h2>
 
+  <p>This file is meant to be opened locally from <code>~/.pioneer/mods/eapi-space/</code>.</p>
 
-# Pioneer.eapi.space
+  <p>
+    If your browser does not allow local file access, please upload your <code>~/.pioneer/config.ini</code> file manually below.
+  </p>
 
-Welcome to Pioneer. We hope this mod brings joy to your life.
+  <input type="file" id="fileInput" accept=".ini,.txt">
+  <div id="output">
+    <h3>Example <code>~/.pioneer/config.ini</code>:</h3>
+    <pre><code id="iniPreview">Var1=0
 
-### Actions
-
-install pioneer
-```shell
-echo "installing dependancies for pioneer"
-sudo apt install libsdl2-image-dev
-sudo apt install libassimp-dev
-sudo apt install libsigc++-2.0-dev
-sudo apt install libvorbis-dev
-sudo apt install libfreetype-dev
-sudo apt install git
-
-
-mkdir -p ~/git
-cd ~/git
-
-git clone https://github.com/syonfox/pioneer.git
-
-cd pioneer 
-
-./bootstap.sh
-make clean
-make -j8
-
-```
-
-install mod
-```shell
-wget https://github.com/syonfox/eapi-space/archive/refs/heads/main.zip
-wget https://codeload.github.com/syonfox/eapi-space/zip/refs/heads/main -o main.zip
-unzip eapi-space-main.zip
-cp eapi-space-main ~/.pioneer/mods/eapi-space
-
-#or with git
-cd ~/.pioneer/mods/
-git clone https://github.com/syonfox/eapi-space.git
-```
-
-enjoy
-
-### Sauces
-
-http://pioneer.eapi.space
-
-https://github.com/pioneerspacesim/pioneer
-
-
-### Writing a mod guide. 
-
-So ill asume you have compiled pioneer from scratch and looked at the files a little. 
-
-Now where do you start? 
-
-Find your mod directory as per os https://wiki.pioneerspacesim.net/wiki/Mods
-
-`LINUX_PIONEER_MOD_DIR=~/.pioneer/mods` henceforth the `<mods>` dir
-
-Also just in general read the wiki: ... maybe start here https://wiki.pioneerspacesim.net/wiki/Introduction_to_Mission_Scripting
-
-
-So then what do you need to know.  mods are in lua .. learn lua ;)
-
-Every folder or zip in the `<mods>` folder will be merged with the pioneer data folder.  
-
-Zip will take priority over a folder.
-
-`~/.pioneer/config.ini`
-```
 [ModLoader]
 eapi-space=0
-honk=disabled
-```
-Above is an example of disabling a mod and adjusting the order of mod loding with the index. in the config.
+honk=disabled</code></pre>
+  </div>
 
-
-you can patch language files as per https://github.com/pioneerspacesim/pioneer/issues/5996#event-15861212915
-
-Systems DO NOT override generated systems or partial systems so create new systems or update a partial system by overriding the
-def file in <mods>/systems/partials/???.lua (todo: fix this)
-
-Tip. You can add a real star to the game and then override this in your mod.
-
-
-# why mod?  
-
-So that you can play around with the systems, ships, etc without git conflict.
-
-# why not mod? 
-
-because you need core cpp features.  Add these to the game
+  <p>
+    Once modified, you will be able to download the updated config back to your system and replace the original manually.
+  </p>
+</body>
+</html>

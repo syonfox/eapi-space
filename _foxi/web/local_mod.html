@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/img/icon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/img/icon/favicon.svg" />
+    <link rel="shortcut icon" href="/img/icon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/icon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Foxi Co." />
+    <link rel="manifest" href="/img/icon/site.webmanifest" />
+
+    <link rel="stylesheet" href="style.css">
+<!--    -->
+    <title>Pioneer Mod Config Editor</title>
+    <style>
+        body { font-family: sans-serif; max-width: 700px; margin: 2em auto; }
+        .mod-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px;
+            border: 1px solid #ccc;
+            margin-bottom: 4px;
+            background: #f9f9f9;
+            cursor: grab;
+        }
+        .drag-handle {
+            cursor: grab;
+            font-size: 1.2em;
+        }
+        .mod-name {
+            flex: 1;
+            font-weight: bold;
+        }
+        input[type="checkbox"] {
+            transform: scale(1.3);
+        }
+        #modList { margin-top: 1em; }
+        button { margin-top: 1em; }
+        pre { white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+
+<h2>Pioneer Mod Config Editor</h2>
+<p>Select your local <code>~/.pioneer/config.ini</code> file:</p>
+<input type="file" id="fileInput" accept=".ini"><br><br>
+
+<div id="editSection" style="display:none;">
+    <h3>[ModLoader] Mods (drag to reorder)</h3>
+    <div id="modList"></div>
+    <button onclick="generateOutput()">Generate Updated Config</button>
+</div>
+
+<div id="outputSection" style="display:none;">
+    <h3>Download or Copy Your Edited File</h3>
+    <button onclick="downloadFile()">Download</button>
+    <details open>
+        <summary>Click to view edited config.ini</summary>
+        <pre id="outputPreview"></pre>
+    </details>
+</div>
+
+<!--    -->
+<!--https://www.youtube.com/watch%3Fv%3Dj3_pOaU2h08&ved=2ahUKEwi5yMXej6qNAxXJsVYBHRsqLaMQwqsBegQIDxAG&usg=AOvVaw20UuDt4zrSYiuuRu7bD7_s-->
+
+<script>
+    let originalLines = [];
+    let modList = [];
+    let modSectionStart = -1;
+    let modSectionEnd = -1;
+
+    document.getElementById('fileInput').addEventListener('change', function () {
+        const file = this.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            originalLines = e.target.result.split(/\r?\n/);
+            parseINI(originalLines);
+        };
+        reader.readAsText(file);
+    });
+
+    function parseINI(lines) {
+        modList = [];
+        modSectionStart = -1;
+        modSectionEnd = lines.length;
+
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i].trim();
+            if (line === '[ModLoader]') {
+                modSectionStart = i;
+                for (let j = i + 1; j < lines.length; j++) {
+                    if (/^\s*\[.*\]/.test(lines[j])) {
+                        modSectionEnd = j;
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+
+        if (modSectionStart === -1) {
+            alert('No [ModLoader] section found.');
+            return;
+        }
+
+        for (let i = modSectionStart + 1; i < modSectionEnd; i++) {
+            const line = lines[i].trim();
+            if (!line || line.startsWith(';')) continue;
+            const [key, ...rest] = line.split('=');
+            if (key && rest.length) {
+                modList.push({
+                    name: key.trim(),
+                    enabled: rest.join('=').trim() !== 'disabled'
+                });
+            }
+        }
+
+        showEditableModList();
+    }
+
+    function showEditableModList() {
+        const container = document.getElementById('modList');
+        container.innerHTML = '';
+        modList.forEach((mod, index) => {
+            const div = document.createElement('div');
+            div.className = 'mod-item';
+            div.draggable = true;
+            div.dataset.index = index;
+
+            div.innerHTML = `
+        <span class="drag-handle">✥</span>
+        <span class="mod-name">${mod.name}</span>
+        <label><input type="checkbox" ${mod.enabled ? 'checked' : ''}> Enabled</label>
+      `;
+
+            addDragEvents(div);
+            container.appendChild(div);
+        });
+
+        document.getElementById('editSection').style.display = 'block';
+    }
+
+    function addDragEvents(item) {
+        item.addEventListener('dragstart', e => {
+            e.dataTransfer.setData('text/plain', e.target.dataset.index);
+        });
+
+        item.addEventListener('dragover', e => e.preventDefault());
+
+        item.addEventListener('drop', e => {
+            e.preventDefault();
+            const fromIndex = parseInt(e.dataTransfer.getData('text/plain'));
+            const toIndex = parseInt(e.currentTarget.dataset.index);
+            if (fromIndex === toIndex) return;
+
+            const [moved] = modList.splice(fromIndex, 1);
+            modList.splice(toIndex, 0, moved);
+            showEditableModList(); // Refresh UI
+        });
+    }
+
+    function generateOutput() {
+        const modItems = document.querySelectorAll('#modList .mod-item');
+        modList.forEach((mod, i) => {
+            const checkbox = modItems[i].querySelector('input[type="checkbox"]');
+            mod.enabled = checkbox.checked;
+
+        });
+
+        const newLines = [...originalLines.slice(0, modSectionStart + 1)];
+
+        modList.forEach((mod, index) => {
+            newLines.push(`${mod.name}=${mod.enabled ? index : 'disabled'}`);
+        });
+
+        newLines.push(...originalLines.slice(modSectionEnd));
+        const output = newLines.join('\n');
+        document.getElementById('outputPreview').textContent = output;
+        document.getElementById('outputSection').style.display = 'block';
+    }
+
+
+    function downloadFile() {
+        const blob = new Blob([document.getElementById('outputPreview').textContent], { type: 'text/plain' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'config.ini';
+        a.click();
+    }
+</script>
+
+</body>
+</html>

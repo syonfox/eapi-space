@@ -80,7 +80,6 @@ Separation (2015): 10.670"*/
 
 
 const a = require("./lib_astro_crs")
-const {degreesToRadians} = require("./lib_astro_crs");
 
 function test_pioneer_offest(star)  {
 
@@ -99,7 +98,7 @@ function test_pioneer_offest(star)  {
 
     }
 
-    let pos_equ = a.calculateAngles(pos.x, pos.y, pos.z);
+    let pos_equ = a.calculate_angles(pos.x, pos.y, pos.z);
     let ra =pos_equ.thetaXYDegrees
     let dec =pos_equ.thetaXZDegrees
 
@@ -129,7 +128,7 @@ let err = test_stars.map(star=>{
     if(star.dist) {
 
         console.log("stellar_input_w_offset_ra (ra,dec,dist) :", res.ra, res.dec, star.dist)
-        let p = a.calculateCartesian(res.ra, res.dec, star.dist)
+        let p = a.calculate_cartesian(res.ra, res.dec, star.dist)
 
         let pioner_pos = a.get_sector_pos(p.x,p.y,p.z); /// this is a rotation maybe but still somthing is broken idk
         console.log("stellar_pos_calculated: ", p);

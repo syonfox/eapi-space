@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Face Maker – Modular Character Renderer</title>
+
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #f8f9fa;
+            color: #333;
+            margin: 0;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: auto;
+        }
+
+        canvas {
+            border: 1px solid #ccc;
+            display: block;
+            margin: 1rem auto;
+        }
+
+        .component-select {
+            margin: 1rem 0;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 0.3rem;
+        }
+
+        select {
+            width: 100%;
+            padding: 0.5rem;
+            font-size: 1rem;
+        }
+
+        button {
+            margin-top: 1rem;
+            padding: 0.6rem 1.2rem;
+            font-size: 1rem;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="text-center">🎨 Face Maker</h1>
+    <p>Select parts to render a face on a <strong>285x295</strong> canvas. Images are layered using predefined offsets and alignment rules.</p>
+
+    <canvas id="faceCanvas" width="285" height="295"></canvas>
+
+    <div id="controls">
+        <div class="component-select">
+            <label for="background">Background</label>
+            <select id="background">
+                <option value="">None</option>
+                <option value="img/backgrounds/bg1.png">Background 1</option>
+                <option value="img/backgrounds/bg2.png">Background 2</option>
+            </select>
+        </div>
+
+        <div class="component-select">
+            <label for="head">Head</label>
+            <select id="head">
+                <option value="">None</option>
+                <option value="img/head/head1.png">Head 1</option>
+                <option value="img/head/head2.png">Head 2</option>
+            </select>
+        </div>
+
+        <div class="component-select">
+            <label for="eyes">Eyes</label>
+            <select id="eyes">
+                <option value="">None</option>
+                <option value="img/eyes/eyes1.png">Eyes 1</option>
+                <option value="img/eyes/eyes2.png">Eyes 2</option>
+            </select>
+        </div>
+
+        <div class="component-select">
+            <label for="nose">Nose</label>
+            <select id="nose">
+                <option value="">None</option>
+                <option value="img/nose/nose1.png">Nose 1</option>
+                <option value="img/nose/nose2.png">Nose 2</option>
+            </select>
+        </div>
+
+        <div class="component-select">
+            <label for="mouth">Mouth</label>
+            <select id="mouth">
+                <option value="">None</option>
+                <option value="img/mouth/mouth1.png">Mouth 1</option>
+                <option value="img/mouth/mouth2.png">Mouth 2</option>
+            </select>
+        </div>
+
+        <div class="component-select">
+            <label for="clothes">Clothes</label>
+            <select id="clothes">
+                <option value="">None</option>
+                <option value="img/clothes/clothes1.png">Clothes 1</option>
+                <option value="img/clothes/clothes2.png">Clothes 2</option>
+            </select>
+        </div>
+
+        <div class="component-select">
+            <label for="accessories">Accessories</label>
+            <select id="accessories">
+                <option value="">None</option>
+                <option value="img/accessories/acc1.png">Glasses</option>
+            </select>
+        </div>
+
+        <div class="component-select">
+            <label for="hair">Hair</label>
+            <select id="hair">
+                <option value="">None</option>
+                <option value="img/hair/hair1.png">Hair 1</option>
+                <option value="img/hair/hair2.png">Hair 2</option>
+            </select>
+        </div>
+
+        <div class="component-select">
+            <label for="armour">Armour</label>
+            <select id="armour">
+                <option value="">None</option>
+                <option value="img/armour/armour1.png">Armour 1</option>
+            </select>
+        </div>
+
+        <button onclick="renderFace()">Render Face</button>
+    </div>
+
+
+    <div>
+        <img src="./img/layout_doc.svg" style="width: 100%; height: auto;" alt="Layout diagram">
+    </div>
+
+</div>
+
+<script>
+    const canvas = document.getElementById('faceCanvas');
+    const ctx = canvas.getContext('2d');
+    const CANVAS_WIDTH = 285;
+    const CANVAS_HEIGHT = 295;
+
+    const components = {
+        background: { xoff: 0, yoff: 0, align: "full" },
+        head: { xoff: 0, yoff: 0, align: "center" },
+        eyes: { xoff: 0, yoff: 41, align: "center" },
+        nose: { xoff: 1, yoff: 89, align: "center" },
+        mouth: { xoff: 0, yoff: 155, align: "center" },
+        clothes: { xoff: 0, yoff: 135, align: "center" },
+        accessories: { xoff: 0, yoff: 0, align: "center" },
+        hair: { xoff: 0, yoff: 0, align: "center" },
+        armour: { xoff: 0, yoff: 0, align: "center" }
+    };
+
+    async function loadImage(src) {
+        return new Promise((resolve, reject) => {
+            if (!src) return resolve(null);
+            const img = new Image();
+            img.onload = () => resolve(img);
+            img.onerror = reject;
+            img.src = src;
+        });
+    }
+
+    async function renderFace() {
+        ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
+        const order = [
+            "background", "head", "clothes", "eyes", "nose", "mouth",
+            "accessories", "hair", "armour"
+        ];
+
+        for (const part of order) {
+            const select = document.getElementById(part);
+            const src = select.value;
+            if (!src) continue;
+
+            const meta = components[part];
+            const img = await loadImage(src);
+
+            let x = 0, y = meta.yoff;
+            if (meta.align === "center") {
+                x = (CANVAS_WIDTH - img.width) / 2 + meta.xoff;
+            } else if (meta.align === "full") {
+                x = meta.xoff;
+                y = meta.yoff;
+            }
+
+            ctx.drawImage(img, x, y);
+        }
+    }
+</script>
+</body>
+</html>

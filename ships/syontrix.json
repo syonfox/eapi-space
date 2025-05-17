@@ -22,17 +22,13 @@
 			"type": "missile_bay.opli_internal",
 			"size": 2,
 			"i18n_key": "HARDPOINT_MISSILE_BAY",
-			"tag": "tag_missile_bay_1",
-			"hardpoint": true,
-			"default": "missile_rack.foxi_internal_s2"
+			"default": "missile_bay.foxi_internal_s2"
 		},
 		"missile_bay_2": {
 			"type": "missile_bay.opli_internal",
 			"size": 2,
 			"i18n_key": "HARDPOINT_MISSILE_BAY",
-			"tag": "tag_missile_bay_2",
-			"hardpoint": true,
-			"default": false
+			"default": "missile_bay.foxi_internal_s2"
 		},
 
 		"fuel_scoop_s1": {
@@ -84,13 +80,8 @@
 		},
 		"hyperdrive": {
 			"type": "hyperdrive",
+			"default": "hyperspace.hyperdrive_1",
 			"size": 3,
-			"size_min": 1,
-			"default": 1
-		},
-		"hyperdrive_s2_1": {
-			"type": "hyperdrive",
-			"size": 2,
 			"size_min": 1
 		},
 		"thruster": {
@@ -130,8 +121,8 @@
 			"type": "fuel_scoop",
 			"size": 3,
 			"size_min": 1,
-			"tag": "tag_fuel_scoop_s3",
-			"hardpoint": false
+			"hardpoint": true
+
 		},
 		"cabin_s1_1": {
 			"type": "cabin",
