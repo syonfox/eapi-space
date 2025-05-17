@@ -46,7 +46,7 @@ enjoy
 
 ### Sauces
 
-http://pioneer.eapi.space
+https://foxi.eapi.space
 
 https://github.com/pioneerspacesim/pioneer
 
@@ -78,7 +78,7 @@ honk=disabled
 ```
 Above is an example of disabling a mod and adjusting the order of mod loading with the index. in the config.
 
-Configure with(https://pioneer.eapi.space/local_mod)
+Configure with(https://foxi.eapi.space/local_mod)
 
 Demo facegen + honk mod 
 ```sh
