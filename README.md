@@ -82,7 +82,7 @@ Configure with(https://foxi.eapi.space/local_mod)
 
 Demo facegen + honk mod 
 ```sh
-cd ./pioneer ;
+cd ~/.pioneer ;
 mkdir -p mods ;
 cd mods ;
 wget https://github.com/syonfox/eapi-space/raw/refs/heads/main/_dev/cat-face.zip

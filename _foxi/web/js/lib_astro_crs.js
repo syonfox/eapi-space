@@ -275,7 +275,7 @@ const a = {
     get_sector_pos,
     approx_j2000_to_pioneer_equatorial,
     equatorialToCartesian,
-    cartesianToEquatorial
+    //cartesianToEquatorial
 }
 // Only export if `module` is defined (ES module environment)
 if (typeof module !== 'undefined' && module.exports) {
