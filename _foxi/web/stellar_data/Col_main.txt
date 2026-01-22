@@ -1,0 +1,104 @@
+δ Col - HIP 30277 - SAO 196735 - HD 44762 - HR 2296
+Type: star
+Magnitude: 3.85
+Absolute Magnitude: -0.11
+Color Index (B-V): 0.85
+RA/Dec (J2000.0): 6h22m06.73s/-33°26'12.0"
+Gal. long./lat.: -118°58'23.9"/-20°14'40.5"
+IAU Constellation: Col
+Distance: 201.70±3.88 ly
+Proper motion: 80.2 mas/yr towards 214.5°
+Proper motions by axes: -45.5 -66.1 (mas/yr)
+Parallax: 16.170±0.317 mas
+Spectral Type: G7II
+
+Kurud II
+κ Col - HIP 29807 - SAO 196643 - HD 43785 - HR 2256
+Type: star
+Magnitude: 4.35
+Absolute Magnitude: 0.61
+Color Index (B-V): 0.98
+RA/Dec (J2000.0): 6h16m33.22s/-35°08'23.8"
+Gal. long./lat.: -117°39'13.3"/-21°53'19.0"
+IAU Constellation: Col
+Distance: 182.52±1.62 ly
+Proper motion: 107.3 mas/yr towards 4.7°
+Proper motions by axes: 8.7 106.9 (mas/yr)
+Parallax: 17.870±0.160 mas
+Spectral Type: G9IIIbCN0.5
+
+γ Col - HIP 28199 - SAO 196352 - HD 40494 - HR 2106 - WDS J05575-3517
+Type: double star
+Magnitude: 4.35
+Absolute Magnitude: -2.78
+Color Index (B-V): -0.15
+RA/Dec (J2000.0): 5h57m32.21s/-35°16'59.4"
+Gal. long./lat.: -118°46'25.3"/-25°38'15.7"
+IAU Constellation: Col
+Distance: 869.75±39.84 ly
+Proper motion: 19.5 mas/yr towards 350.2°
+Proper motions by axes: -3.3 19.2 (mas/yr)
+Parallax: 3.750±0.180 mas
+Spectral Type: B2.5IV
+Position angle (1999): 110.50°
+Separation (1999): 33.780"
+
+Wazn (Wezn)
+β Col - HIP 27628 - SAO 196240 - HD 39425 - HR 2040
+Type: star
+Magnitude: 3.10
+Absolute Magnitude: 0.96
+Color Index (B-V): 1.14
+RA/Dec (J2000.0): 5h50m57.74s/-35°45'53.5"
+Gal. long./lat.: -118°39'42.6"/-27°03'21.2"
+IAU Constellation: Col
+Distance: 87.18±0.28 ly
+Proper motion: 693.2 mas/yr towards 4.4°
+Proper motions by axes: 53.5 691.1 (mas/yr)
+Parallax: 37.410±0.120 mas
+Spectral Type: K1IIICN+1
+
+Phact (Phaet - Phakt)
+α Col - HIP 26634 - SAO 196059 - HD 37795 - HR 1956 - WDS J05396-3404
+Type: double star
+Magnitude: 2.65
+Absolute Magnitude: -1.87
+Color Index (B-V): -0.12
+RA/Dec (J2000.0): 5h39m38.97s/-34°04'27.2"
+Gal. long./lat.: -121°11'27.5"/-28°51'26.1"
+IAU Constellation: Col
+Distance: 261.34±7.33 ly
+Proper motion: 30.3 mas/yr towards 171.3°
+Proper motions by axes: 4.6 -29.9 (mas/yr)
+Parallax: 12.480±0.360 mas
+Spectral Type: B9Ve
+Position angle (2008): 358.40°
+Separation (2008): 13.980"
+
+ε Col - HIP 25859 - SAO 195924 - HD 36597 - HR 1862
+Type: star
+Magnitude: 3.85
+Absolute Magnitude: -0.67
+Color Index (B-V): 1.14
+RA/Dec (J2000.0): 5h31m12.85s/-35°28'14.4"
+Gal. long./lat.: -120°06'36.1"/-30°52'30.4"
+IAU Constellation: Col
+Distance: 261.76±4.99 ly
+Proper motion: 62.5 mas/yr towards 133.3°
+Proper motions by axes: 45.5 -42.9 (mas/yr)
+Parallax: 12.460±0.242 mas
+Spectral Type: K1II/III
+
+η Col - HIP 28328 - SAO 217650 - HD 40808 - HR 2120
+Type: star
+Magnitude: 3.95
+Absolute Magnitude: -1.85
+Color Index (B-V): 1.14
+RA/Dec (J2000.0): 5h59m08.85s/-42°48'54.8"
+Gal. long./lat.: -110°32'35.4"/-27°13'49.1"
+IAU Constellation: Col
+Distance: 472.01±8.06 ly
+Proper motion: 25.5 mas/yr towards 126.4°
+Proper motions by axes: 20.5 -15.1 (mas/yr)
+Parallax: 6.910±0.120 mas
+Spectral Type: G8/K1II
