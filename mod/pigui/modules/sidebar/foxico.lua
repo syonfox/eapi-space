@@ -30,6 +30,8 @@ local gameView = require 'pigui.views.game' -- used to register the sidbar
 
 local Game = require 'Game'                 -- notibaly Game.system and Game.player
 local Player = require 'Player'
+local PlayerState = require 'PlayerState'
+
 local Event = require 'Event'               -- Subscribe to game events for logic
 local Engine = require 'Engine'
 local Timer = require 'Timer'               -- Create Timers
@@ -105,7 +107,10 @@ local FOXI = {
 
     display_ads = {
 
-    }
+    },
+    joined = false,
+    rewards_given = {}
+
 
 }
 -- Function to dump an object in a readable way
@@ -171,8 +176,8 @@ local function onGameStart()
 
 
 
-    FOXI.save_data.rewards_given = {};
-    FOXI.save_data.joined = 0;
+    --FOXI.save_data.rewards_given = {};
+    --FOXI.save_data.joined = 0;
     if FOXI.save_data.init == false then
         msgbox.OK_CANCEL("Welcome to pioneer. Would you like to join the Syon Free Traders & Co?",
             joinCallback, cancelCallback)
@@ -222,6 +227,9 @@ end
 --Event.Register("onEnterSystem", onEnterSystem)
 -- reload the missions avalible
 local function onEnterSystem(ship)
+
+    print("foxico.lua.frame: ship onEnterSystem" .. tostring(ship))
+
     if not ship.IsPlayer() then return end -- dont care about non player movments
 end
 --Event.Register("onShipDestroyed", onShipDestroyed)
@@ -231,7 +239,8 @@ local function onShipDestroyed(ship, attacker)
         print("yo")
     end
 
-    if ship.IsPlayer() or (not nil == attacker and not attacker.IsPlayer()) then return end -- dont count players or other battles
+    -- dont count players or other battles not involving player
+    if ship.IsPlayer() or (not nil == attacker and not attacker.IsPlayer()) then return end
 
     local SF = "Solar Federation"
     local CW = "Commonwealth of Independent Worlds"
@@ -248,20 +257,20 @@ local function onShipDestroyed(ship, attacker)
     --CW -> SF
     --SF -> CW
 
-    -- mecanic. ships will simply build up .. therfore if you manage to pay off your fine then all is good.
+    -- mechanic. ships will simply build up .. therefore if you manage to pay off your fine then all is good.
     -- good luck with that ;)
 
-    --sub mecanic clandestin missions count at 10x towards fine payoffs therfore if you ow 1000000cr you can kill 1000 enemy ships to pay it
+    --sub mechanic clandestin missions count at 10x towards fine payoffs therefore if you ow 1000000cr you can kill 1000 enemy ships to pay it
 
 
-    -- todo check if the ship is poliece
+    -- todo check if the ship is police
 end
 --Event.Register("onLeaveSystem", onLeaveSystem)
 -- calculate total and add it to data.
 local function onLeaveSystem(ship)
-    if not ship.IsPlayer() then return end -- dont care about non player movments
+    if not ship.IsPlayer() then return end -- dont care about non player movements
 
-    -- add rewards to memory for when arives at payable location.
+    -- add rewards to memory for when arrives at payable location.
 end
 
 local function dump(o)
@@ -362,14 +371,15 @@ end
 
 local function check_foxi_missions()
     --local system = Game.system
-    local inSystemClean = Player.GetLegalStatus(Game.player, Game.system.faction.name) == 'CLEAN'
+    local inSystemClean =  1 == 1
+    -- Player.GetLegalStatus(Game.player, Game.system.faction.name) == 'CLEAN'
 
     local isGovTypeNone = Game.system.govtype == "NONE"
     --local current_systempath = sectorView:GetCurrentSystemPath()
 
 
     -- if user is not syon clean thy are not an agent
-    local inSYClean = Player.GetLegalStatus(Game.player, SY) == 'CLEAN'
+    local inSYClean = PlayerState.GetLegalStatus(Game.player, SY) == 'CLEAN'
     if not inSYClean then return nil end
 
 
@@ -378,8 +388,8 @@ local function check_foxi_missions()
 
 
 
-    local inSFClean = Player.GetLegalStatus(Game.player, SF) == 'CLEAN'
-    local inCWClean = Player.GetLegalStatus(Game.player, CW) == 'CLEAN'
+    local inSFClean = PlayerState.GetLegalStatus(Game.player, SF) == 'CLEAN'
+    local inCWClean = PlayerState.GetLegalStatus(Game.player, CW) == 'CLEAN'
 
     local missions = {
         {
@@ -601,15 +611,6 @@ function module:drawTitle()
 
     ui.textAlignedColored("Mission BLUFF: Establish Personal Goals.", 0.1, fg)
 
-    --
-    -- 	ui.addFancyText(pos, ui.anchor.right, ui.anchor.top, {
-    -- 		{ text="mission test", color=fg,     font=pionillium.small, tooltip="test" },
-    -- -- 		{ text='% ',                color=colors.reticuleCircleDark, font=pionillium.tiny,  tooltip=lui.HUD_DELTA_V_PERCENT },
-    -- -- 		{ text=dvr_text,            color=colors.reticuleCircle,     font=pionillium.small, tooltip=lui.HUD_DELTA_V },
-    -- -- 		{ text=dvr_unit,            color=colors.reticuleCircleDark, font=pionillium.tiny,  tooltip=lui.HUD_DELTA_V }
-    -- 	}, colors.lightBlackBackground)
-
-
     local size = Vector2(
         ui.getContentRegion().x - ui.getItemSpacing().x,
         ui.getTextLineHeight())
@@ -694,9 +695,29 @@ function module:drawBody()
     local function giveMissles(num)
         --local missiles = Game.player:GetEquip('missile')
 
-        local numAdded = Game.player:AddEquip(Equipment.misc["missile_smart"], 2)
+        --local numAdded = Game.player:AddEquip(Equipment.misc["missile_smart"], 2)
 
-        print("Atempting to give player " .. num .. " missiles but gave " .. numAdded)
+       --Game = require("Game")
+       --Equipment = require("Equipment")
+
+	    local equipSet = Game.player:GetComponent('EquipSet')
+        local missile = Equipment.Get("missile.guided_s2")
+
+        --equipSet:HasCompatibleSlotForEquipment(m) --true
+        --equipSet:CanInstallLoose(m) -- false
+        print("Attempting to give player " .. num .. missile:GetName())
+        local s = equipSet:GetFreeSlotForEquip(missile)
+        for i=1,num do
+            local m = missile:Instance()
+            local s = equipSet:GetFreeSlotForEquip(missile)
+            if s ~= nil then
+                r = equipSet:Install(m,s)
+                print("Missile Installed = " .. tostring(r))
+            else
+                print("todo give farm machinery")
+            end
+        end
+
         return numAdded
     end
 
@@ -704,32 +725,45 @@ function module:drawBody()
         --local missiles = Game.player:GetEquip('missile')
         if name == nil then name = "syoncanon_5mw" end
 
-        local numAdded = Game.player:AddEquip(Equipment.laser[name], 1)
-        print("Atempting to give player " .. name .. " lasers but gave " .. numAdded)
-        return numAdded
+	    local equipSet = Game.player:GetComponent('EquipSet')
+        local laser = Equipment.Get("laser."..name)
+        local m = missile:Instance()
+
+        print("Attempting to give player a ".. laser:GetName())
+
+        local s = equipSet:GetFreeSlotForEquip(laser)
+        if s ~= nil then
+            r = equipSet:Install(m,s)
+            print("Laser Installed = " .. tostring(r))
+        else
+            print("unable to find slot for laser")
+        end
+
+        return nil
     end
 
     local rewardMap = {
         join = {
             ad = "Offer: Join Syon Free Traders & Company to recieave 2 free farm machinary.",
-            btn = "Tell Me More",
+            btn = "Share Join Offer",
             more =
                 "Psst.. I see your not a member yet, we have 2 smart missles. caugh.. caugh... I mean farm machinary laying"
                 .. " around. They are yours if you join today.",
             ok = function()
                 FOXI.save_data.joined = Game.time
+
                 giveMissles(2);
 
                 return nil -- signifies no error
             end,
             cancel = "All good its a free system. Good luck out there!",
-            thanks = "Cool We have loaded the equitment. Good luck out there."
+            thanks = "Cool We have loaded the equipment. Good luck out there."
         }, -- recieve 2 smart misile to join Syon Free traders
         repeat1 = {
-            ad = "Offer: Valued member surpluss offer receave 2 free farm machinary.",
-            btn = "Tell Me More",
+            ad = "Offer: Valued member surplus offer receive 2 free farm machinery.",
+            btn = "Share Member Offer",
             more =
-                "Psst.. Hi borther, we have 2 smart missles. caugh.. caugh... I mean farm machinary laying"
+                "Psst.. Hi borther, we have 2 smart missiles. caugh.. caugh... I mean farm machinery laying"
                 .. "around. Do you want them?",
             ok = function()
                 --FOXI.save_data.joined = Game.time
@@ -738,15 +772,15 @@ function module:drawBody()
                 return nil; -- in the backed we save that this has been recieved for this month
             end,
             cancel = "All good its a free system. Good luck out there!",
-            thanks = "Cool We have loaded the equitment. Good luck out there."
+            thanks = "Cool We have loaded the equipment. Good luck out there."
             --repeatProgram = true,
         }, -- thanks your first month of service here are 2 free smart_missles
         month6 = {
-            ad = "Offer: Valued member surplus offer receave 1 free mining laser.",
-            btn = "Tell Me More",
+            ad = "Offer: Valued member surplus offer receive 1 free mining laser.",
+            btn = "First Month Bonus",
             more =
-                "Sup.. Hi borther, we have a extra modified mining laser in the shop. Its a great peaice of tech"
-                .. " with 2x capacitor bank doubleing the fire we also tweeked some other parts making it 1 ton lighter!"
+                "Hi brother, we have a extra modified mining laser in the shop. Its a great peace of tech,"
+                .. " with 2x capacitor bank doubling the fire we also tweaked some other parts making it 1 ton lighter!"
                 .. ". Do you want it?",
             ok = function()
                 --FOXI.save_data.joined = Game.time
@@ -755,19 +789,19 @@ function module:drawBody()
                 return nil; -- in the backed we save that this has been recieved for this month
             end,
             cancel = "All good its a free system. Good luck out there!",
-            thanks = "Cool We have loaded the equitment. Good luck out there."
+            thanks = "Cool We have loaded the equipment. Good luck out there."
         }, -- 6 months reciev a free syoncanon
         month12 = {
             ad =
             "Congratulation on one year of membership: Come to syon570 and get a syontrix ship at 84% off! Trade in offer avalible!",
-            btn = "Tell Me More",
+            btn = "One Year Agent",
             requireFaction = SY,
-            notHere = "Im sorry this offer is only avalable at " .. SY .. " starports. Sector 4, 2, 5",
-            -- the idea is that if they do nto meet this requirment the above msg is send otherwise normal rewards operation (anywhere in space)
+            notHere = "Im sorry this offer is only available at " .. SY .. " starports. Sector 4, 2, 5",
+            -- the idea is that if they do nto meet this requirement the above msg is send otherwise normal rewards operation (anywhere in space)
             more =
-                "Sup.. Hi borther, we have a extra modified mining laser in the shop. Its a great peaice of tech ..."
-                .. " with 2x capacitor bank doubleing the mining efficancy we also tweeked some other parts making it 1 ton lighter!"
-                .. ". Do you want it?",
+                "Sup.. Hi brother, we have a extra modified mining laser in the shop. Its a great peace of tech ..."
+                .." with 2x capacitor bank doubling the mining efficacy we also tweaked some other parts making it 1 ton lighter!"
+                ..". Do you want it?",
             ok = function()
                 --FOXI.save_data.joined = Game.time
                 giveLaser("syoncanon_5mw");
@@ -775,20 +809,17 @@ function module:drawBody()
                 return nil; -- in the backed we save that this has been recieved for this month
             end,
             cancel = "All good its a free system. Good luck out there!",
-            thanks = "Cool we have loaded the equitment. Good luck out there."
+            thanks = "Cool we have loaded the equipment. Good luck out there."
         }, -- 1 year come to syon570 and get a syontrix ship at 84% off (bring 20,000cr  no money back on swap.)
         repeat12 = {
-            ad = "yearly Bonus: Thank you for a full years service. Pick up you 10% bonus at any SFT&C System.",
-            btn = "Tell Me More",
+            ad = "yearly Bonus: Thank you for a full years service. Pick up you bonus at any SFT&C System.",
+            btn = "Claim Yearly Bonus",
             requireFaction = SY,
             notHere = "Visit any " ..
                 SY ..
-                " starports to claim your payable on all contract earnings! Our homworld is located in sector 4, 2, 5",
+                " starports to claim your payable on all contract earnings! Our homeworld is located in sector 4, 2, 5",
             more = {
-                "Epic acheavments. You have stayed alive for 500 years. and not once quit our club. For that ocasion we should build a pub."
-                , "Once you are ready we can procead. with loading the 190 tons of cargo you need to get the landing pad and pub build."
-            ,
-                "This is your last chance when you hit ok the boys will load up as much as they can!. Cancel if your not ready for 190tons yet.",
+                "Epic achievements. 1 year of service = 10% bonus,  year 2 = 20%... Thank you for being a loyal member."
             },
             ok = function()
                 --FOXI.save_data.joined = Game.time
@@ -797,7 +828,7 @@ function module:drawBody()
                 return nil; -- in the backed we save that this has been recieved for this month
             end,
             cancel = "All good its a free system. Good luck out there!",
-            thanks = "Cool We have loaded the equitment. Good luck out there."
+            thanks = "Cool We have loaded the equipment. Good luck out there."
         },             --
 
         --month60 = {},  -- 5 year reward come to syon to git afull load of foxi_missile
@@ -806,13 +837,12 @@ function module:drawBody()
             ad = "Offer: Congratulations on 50 years of service! Enjoy a free pub kit on us. Pick up any SFT&C System.",
             btn = "Tell Me More",
             requireFaction = SY,
-            notHere = "Woo... Please send me an invite to the opening pick up suplies at any" ..
-                SY .. " starports. bring a ship with at least 200ton cargospace! Hint 4, 2, 5",
+            notHere = "Woo... Please send me an invite to the opening pick up supplies at any" ..
+                SY .. " starports. bring a ship with at least 200ton cargo space! Hint 4, 2, 5",
             more = {
-                "Epic acheavments. You have stayed alive for 500 years. and not once quit our club. For that ocasion we should build a pub."
-                , "Once you are ready we can procead. with loading the 190 tons of cargo you need to get the landing pad and pub build."
-            ,
-                "This is your last chance when you hit ok the boys will load up as much as they can!. Cancel if your not ready for 190tons yet.",
+                "Epic achievements. You have stayed alive for 50 years, and not once quit our club. For that occasion we should build a pub.",
+                "Once you are ready we can proceed. with loading the 190 tons of cargo you need to get the landing pad and pub build.",
+                "This is your last chance when you hit ok the boys will load up as much as they can!. Cancel if your not ready for 190tons yet."
             },
             ok = function()
                 --FOXI.save_data.joined = Game.time
@@ -821,7 +851,7 @@ function module:drawBody()
                 return nil; -- in the backed we save that this has been recieved for this month
             end,
             cancel = "All good its a free system. Good luck out there!",
-            thanks = "Cool We have loaded the equitment. Good luck out there."
+            thanks = "Cool We have loaded the equipment. Good luck out there."
             --repeatProgram = true,
             --repeatProgram = true
         },              -- 50 year bonus one free pub kit. + 10% bonus on missions compleated. thanks for making thei s a success... each 100 years ()
@@ -832,7 +862,7 @@ function module:drawBody()
 
 
     local logDebugFrame = false;
-    -- show the advtimsment and save the interval to save_data if user accepts rewards.
+    -- show the advisement and save the interval to save_data if user accepts rewards.
     local function advertise_reward(key, months, interval)
         -- this is called from draw  when a rewards is triggered.
 
@@ -852,7 +882,7 @@ function module:drawBody()
                     print("Debug reward["..key.."] save data set to -1; interval:"..interval.."mounths: " .. months)
                 else
                 --ensure that
-                    print("Displaying rewoards:" .. key .. ": for nths time" .. FOXI.save_data.rewards_given[key])
+                    print("Displaying rewords:" .. key .. ": for nths time" .. FOXI.save_data.rewards_given[key])
                 end
             end
         end
@@ -870,7 +900,15 @@ function module:drawBody()
         ui.textWrapped(reward.ad)
 
         if ui.button(reward.btn) then       -- here we are
-            msgbox.OK_CANCEL(reward.more, function()
+            
+            local function formatMessage(msg)
+                if type(msg) == "table" then
+                    return table.concat(msg, "\n")
+                end
+                return msg
+            end
+
+            msgbox.OK_CANCEL(formatMessage(reward.more), function()
                     local err = reward.ok() -- call the function this is expected to return somthing if there is any problem .
                     if not err == nil then
                         Timer:CallAt(Game.time + 2, function()
@@ -942,54 +980,6 @@ function module:drawBody()
         end
     end
 
---[[
-
-    if not FOXI.save_data.recievedOffer == true then
-        local days = 60 * 60 * 24
-
-        if (not FOXI.save_data.joined == false) then
-            local offertime = FOXI.save_data.joined + 1 * days
-            local giveOffer = check_date_and_docked(offertime, SF, 7)
-            if (giveOffer) then
-                ui.textWrapped(
-                    "As an active Syon Free Traders member we would like to award you this free SYONCANON_5MW developed by Foxi Co to advance the effecincy of our mining vessals. Values at 7000cr this is a one time ofer as we have a spare one at this station.")
-            end
-            if ui.button("Read More") then
-                msgbox.OK_CANCEL(
-                    "Psst.. We have a spare mining cannon lying around at this station. If you want you can have it to help get you operations started."
-                    , function()
-                        --FOXI.save_data.given_cannon = true
-                        EquipSet:Add(Game.player, Equipment.misc.missile_smart, 2, nil)
-                        --todo send them the missles
-                    end)
-            end
-        else
-            if not isMember then
-                local offertime = 25 + 365 * days
-                local giveOffer = check_date_and_docked(offertime, SF, 7)
-
-                ui.textWrapped(
-                    "You are elagable for 2 free smart missiols as an insentive to join Syon Free traders & Company")
-                if ui.button("Read More") then
-                    msgbox.OK_CANCEL(
-                        "Psst.. We noticed you're not a member. We have 2 free smart missiles in our facility here.  If you join now I can slip them to you."
-                        , function()
-                            FOXI.save_data.joined = Game.time
-                            --todo send them the missles
-                        end)
-                end
-            else
-                ui.textWrapped("You have recieved you free gift already")
-            end
-        end
-
-        --msgbox.OK("")
-    end
-]]
-
-    --     ui.text.fontScale(10)
-    --         ui.text("If you have A Foxi Co ship then you may also get additional telemetry data.")
-
     ui.text(self.ship.shipId)
 
     ui.sameLine()
@@ -1004,17 +994,21 @@ function module:drawBody()
 
         local missions = check_foxi_missions()
         if missions ~= nil then
+
+               -- for each mission draw it
               for _, mission in ipairs(missions) do
                         --ui.text(mission.title)
                         local c
-                        if mission.enabled then c = fg else c = colors.alertRed end
+                        if mission.enabled
+                            then c = fg
+                            else c = colors.alertRed
+                        end
                         ui.textAlignedColored(mission.name, 0.2, c)
                     end
                     for _, role in ipairs(FOXI.roles) do
                         ui.text(role.title)
             end
         else
-            --         print("ShipId does not start with 'syon'")
             ui.text("You do not have a Foxi Co Ship!")
         end
 
@@ -1056,26 +1050,25 @@ function module:refresh()
 
     -- this is called when the ui is opened with the button or the user navicates back to the game screen from
     -- the system menu
-    --msgbox.OK("Mod Refresh")
-    -- 	self.shipDef = ShipDef[self.ship.id]
     uiopen()
-
-    --self:resetTransfer()
 end
 
 -----------------------------------------
--- Register Syon Mod Event handelers
+-- Register Syon Mod Event handlers
 -----------------------------------------
--- i still dont realy know how tha whole systme works but i guess event based programing is good.
--- ps i notices perfromance hist in som senarios with lots of this so we want to only use events we absolutly need.
+-- I still dont really know how tha whole system works but i guess event based programing is good.
+-- ps I notices performance hits in some scenarios with lots of this so we want to only use events we absolutely need.
 Event.Register("onGameStart", onGameStart)
 
 Event.Register("onEnterSystem", onEnterSystem)
 
+-- track our kills (or take it from player)
 Event.Register("onShipDestroyed", onShipDestroyed)
 
+-- track time spent in each system
 Event.Register("onLeaveSystem", onLeaveSystem)
 
+--safely save all data (leave system.)
 Event.Register("onGameEnd", onGameEnd)
 
 gameView.registerSidebarModule("foxico", module)

@@ -18,7 +18,7 @@
 <body>
 
 <h1><img width=32 src="img/logo_1.svg"> Foxi Co. Home Page</h1>
-<nav><a>About</a><a>Ships</a><a>Systems</a>
+<!--<nav><a>About</a><a>Ships</a><a>Systems</a>-->
 
 </nav>
 <p>We are a company made up of individuals who feel that the complexities of governance need not be so complex</p>
@@ -31,18 +31,116 @@
 
 <h4>Self Reliance</h4>
 
-<p>Our system aims to be dependant of the other worlds. Once a member of the common wealth of independent worlds we have progressed.</p>
+<p>Our system aims to be dependent of the other worlds. Once aligned with various occupations, we have progressed.</p>
 
 <p>Our home is a safe haven that balances on the line of diplomacy.  We have found a way to be of benefit to all around us.</p>
 
-<p>By living in harmony and providing improved effeminacy of all operation from Metals Extraction, Refiling services and Transportation</p>
+<p>By living in harmony and providing improved efficiency of all operations from Metals Extraction, Refiling services and Transportation</p>
 
-<button>Syontrix Ship</button>
-<button>5mw Rapid Mining Cannon</button>
-<button>Syon570 Home World</button>
-<button>Syon Free Traders & Co</button>
-<button>Foxi Co Galactic Network </button>
+<div class="grid-container">
+    <div class="button-column">
+        <button class="nav-button" onclick="showInfo('syontrix')">Syontrix Ship</button>
+        <button class="nav-button" onclick="showInfo('cannon')">5mw Rapid Mining Cannon</button>
+        <button class="nav-button" onclick="showInfo('syon570')">Syon570 Home World</button>
+        <button class="nav-button" onclick="showInfo('traders')">Syon Free Traders & Co</button>
+<!--        <button class="nav-button" onclick="showInfo('network')">Foxi Co Galactic Network</button>-->
+    </div>
+    <div class="info-panel" id="infoPanel">
+        <div id="syontrix" class="info-content">
+            <h3>Syontrix Ship</h3>
+            <p>A robust merchant vessel designed with mining operations and trade efficiency in mind.</p>
+            <h4>Ship Specifications</h4>
+            <ul>
+                <li><strong>Class:</strong> Medium Freighter</li>
+                <li><strong>Manufacturer:</strong> Foxi Co.</li>
+                <li><strong>Price:</strong> 124,999 credits</li>
+                <li><strong>Crew:</strong> 1-2 personnel</li>
+                <li><strong>Cargo Capacity:</strong> 200 units</li>
+                <li><strong>Hull Mass:</strong> 42 tons</li>
+            </ul>
+            <h4>Key Features</h4>
+            <ul>
+                <li>Atmospheric flight capable (up to 3.2 pressure)</li>
+                <li>4 cabin slots for crew quarters</li>
+                <li>Dual missile bay system</li>
+                <li>Advanced shield configuration (multiple shield slots)</li>
+                <li>Multiple computer systems</li>
+                <li>Versatile roles: Trading, Mining, Exploration</li>
+            </ul>
+        </div>
+        <div id="cannon" class="info-content">
+            <h3>5mw Rapid Mining Cannon</h3>
+            <h4>Technical Specifications</h4>
+            <ul>
+                <li><strong>Price:</strong> 13,700 credits</li>
+                <li><strong>Tech Level:</strong> 5</li>
+                <li><strong>Mass:</strong> 6 tons</li>
+                <li><strong>Volume:</strong> 6 cubic meters</li>
+                <li><strong>Slot Type:</strong> Mining Weapon (Size 2)</li>
+            </ul>
+            <h4>Performance Stats</h4>
+            <ul>
+                <li><strong>Damage Output:</strong> 5,500</li>
+                <li><strong>Beam Length:</strong> 60 meters</li>
+                <li><strong>Beam Width:</strong> 8 meters</li>
+                <li><strong>Shot Lifespan:</strong> 8 seconds</li>
+                <li><strong>Shot Speed:</strong> 1,500 m/s</li>
+                <li><strong>Recharge Time:</strong> 0.75 seconds</li>
+            </ul>
+        </div>
+        <div id="syon570" class="info-content">
+            <h3>Syon570 Home World</h3>
+            <p>A delightful and bustling corner of the galaxy, where foxes reign supreme. These clever and industrious
+                creatures have transformed their home into a marvel of interstellar ingenuity and charm. Located in
+                sector [4,2,5], Syon570 is home to multiple stations and settlements including Fox City, Fox Port, Fox
+                Station and Fox Mine. The system features a red dwarf star (class M) with multiple planets including gas
+                giants and asteroid belts. Notable locations include Morita Port, Kiselev Village, and Hempelville
+                across various moons and asteroids.</p>
+        </div>
+        <div id="traders" class="info-content">
+            <h3>Syon Free Traders & Co</h3>
+            <p>Amidst the ongoing feud between The Federation and Commonwealth, a band of free merchants has adeptly
+                played both sides, establishing an independent governance where disputes are settled over drinks at the
+                local pub. Known for their cunning business acumen and resourcefulness, the Syon Free Traders & Company
+                have carved out a niche as intermediaries and suppliers in the tumultuous trade lanes of the galaxy.</p>
+        </div>
+        <div id="network" class="info-content">
+            <h3>Foxi Co Galactic Network</h3>
+            <p>Network details...TBD</p>
+        </div>
+    </div>
+</div>
+<style>
+    .nav-button.active {
+        background-color: #4CAF50;
+        color: white;
+    }
+</style>
+<script>
+    function showInfo(contentId) {
+        // Remove active state from all buttons
+        const buttons = document.querySelectorAll('.nav-button');
+        buttons.forEach(btn => btn.classList.remove('active'));
 
+        // Add active state to clicked button
+        const activeButton = document.querySelector(`button[onclick="showInfo('${contentId}')"]`);
+        if (activeButton) activeButton.classList.add('active');
+
+        // Hide all info panels
+        const panels = document.querySelectorAll('.info-content');
+        panels.forEach(panel => panel.style.display = 'none');
+
+        // Show selected panel
+        const selectedPanel = document.getElementById(contentId);
+        if (selectedPanel) selectedPanel.style.display = 'block';
+    }
+
+    // Hide all panels on load
+    document.addEventListener('DOMContentLoaded', () => {
+        const panels = document.querySelectorAll('.info-content');
+        panels.forEach(panel => panel.style.display = 'none');
+    });
+</script>
 
 <h4>System Overview</h4>
 <table>
@@ -69,7 +167,7 @@
   <h4>Pages</h4> </h4>
   <ul>
     <li><a href="./local_mod.html">Local Mod Manager</a></li>/local_mod - A place to edit you config.ini</a>
-    <li><a href="./face_maker.html">Face Maker</a></li>/face_maker - Review adding custom components to face gen</a>
+<!--    <li><a href="./face_maker.html">Face Maker</a></li>/face_maker - Review adding custom components to face gen</a>-->
     <li><a href="./j2000_to_pioneer_sector_pos_calculator.html">J2000 to Pioneer</a></li>/j2000_to_pioneer_sector_pos_calculator</a>
   </ul>
 </section>

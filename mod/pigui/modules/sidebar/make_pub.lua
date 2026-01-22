@@ -17,12 +17,45 @@
 --    print(key .. ": " .. value)
 --end
 
+local structureRequirements = {
+
+    stash = {
+        name = "stash",
+        title = "Storage Box",
+        desc = "Well I need a place to put my stuff here lets fab up a nice box and bury it on this rock.",
+        risk = 0.01,
+        requirements = { -- 12 ton requirement -> mars starter can build it
+            water = 1,
+            industrial_machinery = 1, -- 10
+            liquor = 1,
+            metal_alloy = 8,          -- 160
+            precious_metals = 1       -- 180
+        }
+    },  -- <--- COMMA added here
+
+    shack = {
+        name = "shack",
+        title = "Shanty Outpost",
+        desc = "Well my box is getting a little small to hide, if I install a vending machinery it might still be here when I get back.",
+        risk = 0.15,
+        requirements = {
+            robots = 1,
+            computers = 2,
+            air_processors = 3,
+            industrial_machinery = 4, -- 10
+            water = 4,
+            metal_alloy = 15           -- 160
+        }
+    }
+
+}
+
 
 local colonyRequirements = {
     level0 = {
         name = "pub",
         title = "Syon Pub",
-        desc = "Its just a landing pad with some beer for a wherey traveler.",
+        desc = "Its just a landing pad with some beer for a wherry traveler.",
         requirements = {
             robots = 2,
             computers = 2,
@@ -66,7 +99,7 @@ local colonyRequirements = {
             slaves = 10,                -- Additional workforce for expanded agricultural operations
             live_animals = 5,           -- Additional livestock for increased food production
             fertilizer = 10,            -- Continued need for soil enrichment
-            farming_machinery = 10,     -- Enhanced tools and equipment for larger-scale farming
+            farming_machinery = 15,     -- Enhanced tools and equipment for larger-scale farming
             metal_alloys = 40,          -- Additional materials for farm expansions and infrastructure
             precious_metals = 10,       -- Continuation for electronics and trade
             medicine = 10,              -- Continued healthcare needs
@@ -82,7 +115,7 @@ local colonyRequirements = {
         desc = "Additional requirements to upgrade the basic colony to focus on mining activities.",
         requirements = {
             slaves = 15,                -- Increased workforce for mining operations
-            mining_machinery = 12,      -- Enhanced equipment for deeper and more efficient mining
+            mining_machinery = 20,      -- Enhanced equipment for deeper and more efficient mining
             metal_alloys = 50,          -- Additional materials for mining infrastructure and expansion
             precious_metals = 15,       -- Continued need for valuable metals
             medicine = 15,              -- Enhanced healthcare facilities and supplies
@@ -97,7 +130,7 @@ local colonyRequirements = {
         desc = "Additional requirements to upgrade the basic colony to focus on industrial production.",
         requirements = {
             slaves = 20,                -- Expanded workforce for industrial production
-            industrial_machinery = 15,  -- Advanced machinery for manufacturing and production
+            industrial_machinery = 25,  -- Advanced machinery for manufacturing and production
             metal_alloys = 80,          -- Significant materials for industrial infrastructure and expansion
             precious_metals = 25,       -- Increased demand for precious metals in electronics and trade
             medicine = 20,              -- Enhanced healthcare facilities and supplies

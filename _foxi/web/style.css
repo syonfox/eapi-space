@@ -2,14 +2,14 @@
 :root {
     --primary-color: #FF6600;  /* Orange */
     --secondary-color: #007BFF;  /* Blue */
-    --background-color: #f4f4f4;  /* Light Gray */
+    --background-color: #e0fffd;  /* Light Gray */
     --text-color: #333;  /* Dark Text */
     --link-color: var(--secondary-color);  /* Blue Links */
     --link-hover-color: var(--primary-color);  /* Orange on Hover */
     --button-bg-color: var(--primary-color);  /* Orange Button */
     --button-text-color: #fff;  /* White Button Text */
     --button-hover-bg-color: var(--secondary-color);  /* Blue Button Hover */
-    --header-bg-color: #333;  /* Dark Background for Headers */
+    --header-bg-color: #777;  /* Dark Background for Headers */
     --header-text-color: #fff;  /* White Text for Headers */
     --code-bg-color: #282C34;  /* Dark Code Background */
     --code-text-color: #F8F8F2;  /* Light Code Text */
@@ -49,6 +49,7 @@ h1, h2, h3, h4, h5, h6 {
     background-color: var(--header-bg-color);
     padding: 10px;
     margin-bottom: 20px;
+    margin-top: 40px;
     border-radius: 5px;
 }
 

@@ -2,4 +2,7 @@
 
 echo "FOXI BUILD"
 
-echo "do nothing"
+
+./zip_mod.sh mod
+echo "Zipped mods release to _release directory"
+

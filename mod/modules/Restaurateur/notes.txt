@@ -1,0 +1,26 @@
+Restaurateur = a person who owns or manages a restaurant.
+
+First you need a cache on a planet.
+
+note while this is themaed around restatuant it does not mean this is for only this.
+
+this is an attempt to mod in a present building on the planet surface.
+
+Resources:
+
+Structure: anything built
+let Structure = {
+    system:
+    body:
+    lat: 90
+    lon: 60
+    progression: 0
+
+}
+-- goals of a structure:
+    -- Allow the storage of commondadys for return
+    -- Allow upgradiong the
+
+let progression = [
+    Stash,Shack,Pub
+]

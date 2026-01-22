@@ -1,0 +1,26 @@
+{
+  "SYONTRIX": {
+    "description": "ship name - base form",
+    "message": "Syontrix"
+  },
+  "SYONTRIX_DEF": {
+    "description": "ship - definite form",
+    "message": "the Syontrix"
+  },
+  "SYONTRIX_INDEF": {
+    "description": "ship name - indefinite form",
+    "message": "a Syontrix"
+  },
+  "SYONTRIX_POLICE": {
+    "description": "ship name - base form",
+    "message": "Syontrix police ship"
+  },
+  "SYONTRIX_POLICE_DEF": {
+    "description": "ship - definite form",
+    "message": "the Syontrix police ship"
+  },
+  "SYONTRIX_POLICE_INDEF": {
+    "description": "ship name - indefinite form",
+    "message": "a Syontrix police ship"
+  }
+}

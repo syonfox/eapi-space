@@ -43,6 +43,33 @@ local eqsec = {
 	{ name = le.HULL_MOUNTS, types = { "hull", "utility", "fuel_scoop", "structure" } },
 }
 
+
+-- StartVariants.register({
+-- 	name       = lui.START_AT_MARS,
+-- 	desc       = lui.START_AT_MARS_DESC,
+-- 	location   = SystemPath.New(0,0,0,0,18),
+-- 	logmsg     = lui.START_LOG_ENTRY_1,
+-- 	shipType   = 'coronatrix',
+-- 	money      = 600,
+-- 	equipment = {
+-- 		computer_1     = "misc.autopilot",
+-- 		laser_front_s2 = "laser.pulsecannon_1mw",
+-- 		shield_s1_1    = "shield.basic_s1",
+-- 		shield_s1_2    = "shield.basic_s1",
+-- 		sensor         = "sensor.radar",
+-- 		hull_mod       = "hull.atmospheric_shielding_s1",
+-- 		hyperdrive     = "hyperspace.hyperdrive_2",
+-- 		thruster       = "misc.thrusters_default",
+-- 		missile_bay_1  = "missile_bay.opli_internal_s2",
+-- 		missile_bay_2  = "missile_bay.opli_internal_s2",
+-- 	},
+-- 	cargo      = {
+-- 	},
+-- 	pattern    = 1,
+-- 	colors     = { Color('000000'), Color('000000'), Color('000000') }
+-- })
+
+
 StartVariants.register({
 	name           = lui.START_AT_SYON,
 	desc           = lui.START_AT_SYON_DESC,
@@ -50,19 +77,12 @@ StartVariants.register({
 	logmsg         = lui.START_LOG_ENTRY_4,
 	shipType       = 'syontrix',
 	money          = 5000,
-	hyperdrive     = true,
-	equipment      = {
-  		--{ equipment2.computer_1,      1 },
-  		--{ equipment2.missile_bay_1,      1 },
--- 		{misc.atmospheric_shielding,1},
- 		--{ "misc.autopilot",1},
- 		--{ "sensor.radar",1}
+	equipment = {
+		computer_4     = "misc.autopilot",
+		thruster       = "thruster.default_s1" -- notethat this is required for a valid ship start.
 	},
-	cargo          = {
-		--{ Commodities.hydrogen, 10 }
+	cargo       = {
 	},
-	pattern    = 2,
--- 	colors     = { Color('000000'), Color('000000'), Color('000000') }
-
+	pattern     = 2,
     colors = { Color('FF7F00'), Color('E0E0E0'), Color('0000FF') }
 })

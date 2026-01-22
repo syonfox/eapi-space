@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Foxi Stellar Pioneer Calculator</title>
 
-    <link rel="icon" type="image/png" href="/img/icon/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/img/icon/favicon.svg" />
-    <link rel="shortcut icon" href="/img/icon/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/img/icon/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-title" content="Foxi Co." />
-    <link rel="manifest" href="/img/icon/site.webmanifest" />
+    <link rel="icon" type="image/png" href="/img/icon/favicon-96x96.png" sizes="96x96"/>
+    <link rel="icon" type="image/svg+xml" href="/img/icon/favicon.svg"/>
+    <link rel="shortcut icon" href="/img/icon/favicon.ico"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/icon/apple-touch-icon.png"/>
+    <meta name="apple-mobile-web-app-title" content="Foxi Co."/>
+    <link rel="manifest" href="/img/icon/site.webmanifest"/>
 
     <link rel="stylesheet" href="style.css">
 </head>
@@ -18,15 +18,19 @@
 <div class="container">
     <h1 class="text-center">Foxi Stellar Pioneer Calculator</h1>
     <h2>Input J2000 Coordinates ie.</h2>
-    <label>Right Ascension/Declination from Stellarium. ie. <bold style="font-weight: bolder">7h45m17.75s/+28°01'30.1"</bold></label><br>
-<!--    <input id="j2000" placeholder="Ra/Dec (j2000)">-->
+    <label>Right Ascension/Declination from Stellarium. ie.
+        <bold style="font-weight: bolder">7h45m17.75s/+28°01'30.1"</bold>
+    </label><br>
+    <!--    <input id="j2000" placeholder="Ra/Dec (j2000)">-->
 
     <label class="input" title="This is the hms/dms j2000 Right Ascension/Declination from Stellarium.">
         <input name="j2000" id="j2000" class="input__field" type="url" placeholder=" ">
         <span class="input__label">RA/Dec (J2000.0):</span>
     </label>
-    <p>Hint: Use <strong>Ctrl + Shift + C</strong> in Stellarium to copy object info. Paste RA and Dec below. Adjust as needed.</p>
-    <small>Be careful of weirs quotes and extra characters, ensure the entered value looks exactly like the bold sample above.</small>
+    <p>Hint: Use <strong>Ctrl + Shift + C</strong> in Stellarium to copy object info. Paste RA and Dec below. Adjust as
+        needed. <br><small>Be careful of weird quotes and extra characters, ensure the entered value looks exactly like the bold sample
+            above.</small></p>
+
     <form id="calculatorForm">
         <label for="ra">Right Ascension (RA in degrees):</label><br>
         <input type="input" id="ra" name="ra" required><br><br>
@@ -35,7 +39,7 @@
         <input type="input" id="dec" name="dec" required><br><br>
 
         <h4 for="dist">Distance (Light Years):</h4><br>
-<!--        <input type="input" id="dist" name="dist" required><br><br>-->
+        <!--        <input type="input" id="dist" name="dist" required><br><br>-->
 
         <label class="input" title="This is the hms/dms j2000 ra/dec from stellarium.">
             <input name="dist" id="dist" class="input__field" type="number" placeholder=" " required>
@@ -55,7 +59,6 @@
 <script type="module" src="./js/lib_astro_crs.js"></script>
 
 
-
 <script>
     const SECTOR_SIZE = 8;
 
@@ -68,7 +71,7 @@
         const y = dist * Math.cos(decRad) * Math.sin(raRad);
         const z = dist * Math.sin(decRad);
 
-        return { x, y, z };
+        return {x, y, z};
     }
 
     // Function to get sector position
@@ -76,7 +79,7 @@
         function adjustCoord(coord) {
             const pos = ((coord % SECTOR_SIZE) + SECTOR_SIZE) % SECTOR_SIZE;
             const sector = Math.floor(coord / SECTOR_SIZE);
-            return { pos, sector };
+            return {pos, sector};
         }
 
         const adjustedX = adjustCoord(x);
@@ -90,7 +93,6 @@
     }
 
 
-
     const raAdjustValue = document.getElementById('raAdjustValue');
     const decAdjustValue = document.getElementById('decAdjustValue');
 
@@ -100,7 +102,7 @@
     const decInput = document.getElementById('dec')
     const distInput = document.getElementById('dist')
 
-    j2000Input.addEventListener("input", ()=>{
+    j2000Input.addEventListener("input", () => {
 
         let j2000 = j2000Input.value
         let equ = a.parseStellariumEqu(j2000)
@@ -114,9 +116,9 @@
     document.getElementById('calculatorForm').addEventListener('submit', (event) => {
         event.preventDefault();
 
-        const ra = parseFloat(document.getElementById('ra').value) ;
-        const dec =parseFloat(document.getElementById('dec').value) ;
-        const dist=parseFloat(document.getElementById('dist').value);
+        const ra = parseFloat(document.getElementById('ra').value);
+        const dec = parseFloat(document.getElementById('dec').value);
+        const dist = parseFloat(document.getElementById('dist').value);
 
         let pioneer_equ = a.approx_j2000_to_pioneer_equatorial(ra, dec)
         const cartesian = a.calculate_cartesian(pioneer_equ.ra, pioneer_equ.dec, dist);
@@ -141,5 +143,292 @@ ${JSON.stringify(sectorPos, null, 2)}
             `;
     });
 </script>
+
+
+<div>
+    <h2>Bulk Stellarium Converter</h2>
+    <p>Seperator = \n\n</p>
+    <p>Copy from stellarium with Ctrl+Shift+C</p>
+    <p>Must include RA/Dec</p>
+
+    <h3>Step 0: <code>sudo apt install -y stellarium ;</code></h3>
+    <img src="./img/stellarium_recomended_settings.jpg">
+    <h3>Step 6: Load file or paste to input file bellow</h3>
+    <input style="width: 80%" id="file_input" type="file">
+    <button id="btn_file_input">Load Stars File</button>
+    <input style="width: 80%" id="uri_input" value="./stellar_data/Col_main.txt">
+    <button id="btn_uri_input">Load Stars URI</button>
+    <textarea style="width: 80%" rows=8 id="paste_input"></textarea>
+    <button id="btn_paste_input">Add Pasted Star</button>
+    <details>
+        <summary>Input File</summary>
+        <pre id="star_input"></pre>
+    </details>
+
+    <details>
+        <summary>Output File</summary>
+        <pre id="star_output"></pre>
+    </details>
+
+    <script>
+        var file_input = document.getElementById("file_input")
+        var btn_file_input = document.getElementById("btn_file_input")
+        var uri_input = document.getElementById("uri_input")
+        var btn_uri_input = document.getElementById("btn_uri_input")
+        var paste_input = document.getElementById("paste_input")
+        var btn_paste_input = document.getElementById("btn_paste_input")
+
+        var star_input = document.getElementById("star_input")
+        var star_output = document.getElementById("star_output")
+
+        var stars_raw = []
+        var stars_parsed = []
+        function gotText(text, append=true) {
+
+            star_input.innerText = text;
+
+            let stars = text.split("\n\n")
+            console.log("received stars count: ",stars.length)
+            stars.forEach(s=>{
+                stars_raw.push(s);
+                stars_parsed.push(parseStar(s));
+            });
+
+            star_output.innerText = [
+                stars_parsed.map(s=>s.foxipos).join("\n"),
+                "[",
+                stars_parsed.map(s=>JSON.stringify(s.sectorPos)).join(",\n"),
+                "]"
+            ].join("\n\n");
+        }
+
+        /**
+         * J2000 Positioning System Documentation
+         *
+         * Standard epoch reference system used in astronomical calculations:
+         * - Reference Point: Sol (Earth's Sun)
+         * - Reference Time: January 1, 2000, 12:00 TT (Terrestrial Time)
+         * - Origin: Solar System Barycenter (center of mass)
+         *
+         * Coordinate System:
+         * - X-axis: Vernal equinox direction at J2000.0
+         * - Z-axis: Perpendicular to the J2000.0 mean equator
+         * - Y-axis: Completes the right-handed system
+         *
+         * @see https://en.wikipedia.org/wiki/J2000.0
+         */
+
+        /**
+         * Parses a Foxi Positional String and extracts astronomical coordinates.
+         * radec must be j2000 stelarums formating ex. j2000:5h59m08.85s/-42°48'54.8"@472.01ly
+         * @param {string} fp - The Foxi position string in the format "prefix:radec@distance".
+         *                      Example: "abc:12h34m56s+78d90m00s@100ly".
+         * @return {object} An object containing the parsed astronomical coordinates:
+         *                  - `ra` (Right Ascension, in degrees, between 0 and 360)
+         *                  - `dec` (Declination, in degrees, between -180 and 180)
+         *                  - `dist` (Distance, in light-years, positive value)
+         *                  If the input does not meet expected bounds or format, assertions will fail.
+         */
+        function parseFoxiPos(fp) {
+            let d = fp.split(":").pop();
+            let [radec, ly] = d.split("@")
+            let equ = a.parseStellariumEqu(radec)
+            equ.dist = parseFloat(ly.split("ly")[0])
+
+            console.assert(equ.ra >= 0 && equ.ra <= 360, "Right Assertion Must be between 0 and 360")
+            console.assert(equ.dec >= -180 && equ.dec <= 180, "Declaration must be between -180 and 180")
+            console.assert(equ.dist >= 0, "Distance must be positive else is Sol at 0,0,0")
+
+            return equ;
+        }
+
+        /**
+         * takes input as a stellarium string and parses the data
+         * @param star
+         * @returns {{sectorPos: {sector: [number,number,number], pos: [number,number,number]}, foxipos: string, equ: {ra: *, dec: *}, fp3: (*|number)[], obj: {[p: string]: any}}}
+         */
+        function parseStar(star) {
+            let rows = star.trim().split("\n").map(r=>r.split(': '));
+
+            var hasname = false
+            var name = ""
+            var catalog
+            if(rows[1].length === 1) {
+                //has name and catalog
+                name = rows.shift()[0].trim()
+                catalog = rows.shift()[0].trim()
+                hasname = true;
+            } else {
+                //has only catalog
+                catalog = rows.shift()[0].trim()
+            }
+
+            var names = []
+            //todo parse names
+            function addName(name) {
+                let trimed = name.trim()
+                console.log("AddingName:", trimed)
+                names.push(trimed)
+            }
+            if(name) {
+                //then we have at least one
+                let bits = name.split("(");
+                if(bits.length === 1) {
+                    //we have only one
+                    addName(bits[0]);
+                } else {
+                    // we have many
+                    addName(bits[0]);
+                    //ex. Phact (Phaet - Phakt)
+                    let others = bits[1].split(")").shift() // get rid of the closing bracket
+                        .split(" - "); // split on dash separator
+                    others.forEach(addName)
+                }
+            }
+            var catalogNames = catalog.split(" - ") // note stellarium adds these spaces as dash can be used in a catalog id.
+            catalogNames.forEach(addName)
+
+            console.log(names);
+
+            let obj = Object.fromEntries(rows);
+            console.log(obj);
+
+
+            let js = "RA/Dec (J2000.0)"
+            let ds = "Distance"
+            let ts = "Type"
+            let ss = "Spectral Type"
+
+            jd = obj[js]
+            var [dd, de] = obj[ds].split("±")
+
+            let starType = obj[ts];
+            let spectralType = obj[ss];
+            /**
+             * Parses a stellar spectral type classification
+             * @param {string} spectralType - The spectral type string (e.g., "G7II", "K1IIICN+1", "B9Ve")
+             * @returns {{
+             *   mainClass: string,        // Main spectral class (O, B, A, F, G, K, M)
+             *   subClass: string|null,    // Numerical subclass (0-9, can include decimals)
+             *   luminosity: string|null,  // Luminosity class (I-VII)
+             *   peculiarity: string|null  // Additional spectral peculiarities (e.g., 'CN+1', 'e')
+             * }}
+             */
+            function parseSpectralType(spectralType) {
+                if (!spectralType) return {
+                    mainClass: null,
+                    subClass: null,
+                    luminosity: null,
+                    peculiarity: null
+                };
+
+                // Handle special case of compound types (e.g., "G8/K1II")
+                if (spectralType.includes('/')) {
+                    const types = spectralType.split('/');
+                    return parseSpectralType(types[0]); // Return primary type
+                }
+
+                // Updated regex to handle more complex patterns
+                const regex = /^([OBAFGKM])(\d+\.?\d*)?([IVX]+)?(.+)?$/;
+
+                const match = spectralType.match(regex);
+                if (!match) {
+                    return {
+                        mainClass: spectralType,
+                        subClass: null,
+                        luminosity: null,
+                        peculiarity: null
+                    };
+                }
+
+                // Separate peculiarities from luminosity class if they're combined
+                let luminosity = match[3] || null;
+                let peculiarity = match[4] || null;
+
+                // If peculiarity starts with additional Roman numerals, adjust accordingly
+                if (peculiarity && peculiarity.match(/^[IVX]+/)) {
+                    luminosity = (luminosity || '') + peculiarity.match(/^[IVX]+/)[0];
+                    peculiarity = peculiarity.replace(/^[IVX]+/, '');
+                }
+
+                return {
+                    mainClass: match[1],                    // Main spectral class
+                    subClass: match[2] || null,            // Numerical subclass
+                    luminosity: luminosity,                // Luminosity class
+                    peculiarity: peculiarity?.trim() || null  // Peculiarities
+                };
+            }
+
+            let parsedSpectralType = parseSpectralType(spectralType);
+    console.log(parsedSpectralType);
+            var foxipos=starType+"$TYPE_"+parsedSpectralType.mainClass+'_j2000:'+jd+'@'+dd+"ly"
+
+
+            let equ =  parseFoxiPos(foxipos);
+            var fp3 = [equ.ra, equ.dec, equ.dist];
+
+
+            console.log(foxipos, equ, fp3);
+            // {"name": "Zeta Sagittarii", "stars": ["STAR_A_GIANT"], "sector": [-10, -3, -6], "pos": [5.616, 3.16, 3.616]},
+            // {"name": "Beta Arietis", "stars": ["STAR_A"], "sector": [3, -7, 2], "pos": [2.712, 7.128, 5.168]},
+            let pioneer_equ = a.approx_j2000_to_pioneer_equatorial(equ.ra, equ.dec)
+            const cartesian = a.calculate_cartesian(pioneer_equ.ra, pioneer_equ.dec, equ.dist);
+            const sectorPos = a.get_sector_pos(cartesian.x, cartesian.y, cartesian.z);
+
+
+
+            sectorPos.name = names[0]
+            sectorPos.otherNames = names.slice(1);
+
+            let type = "STAR_"+parsedSpectralType.mainClass
+
+            sectorPos.stars = [type]
+            if(starType === "double star") {
+                sectorPos.stars.push(type)
+            }
+
+            return {sectorPos, foxipos, equ, fp3, obj}
+        }
+
+        function loadFile() {
+            const file = file_input.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const text = e.target.result;
+                console.log(text);
+                gotText(text);
+            };
+            reader.readAsText(file);
+        }
+
+        function loadUri() {
+            let uri = uri_input.value;
+            fetch(uri).then(response => response.text()).then(r => {
+                gotText(r);
+            }).catch(e => console.error(e));
+        }
+
+        function loadPaste() {
+            let text = paste_input.value.trim();
+            if (text.length <= 1) {
+                alert("There is no text. dis the paste work?")
+            } else {
+                gotText(text);
+            }
+        }
+
+        btn_file_input.addEventListener("click", loadFile)
+        btn_uri_input.addEventListener("click", loadUri)
+
+        btn_paste_input.addEventListener("click", loadPaste)
+
+        console.debug("Done code")
+    </script>
+
+</div>
+
+
 </body>
 </html>

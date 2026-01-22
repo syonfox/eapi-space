@@ -1,0 +1,27 @@
+{
+    "FOXI_INTERNAL_MISSILE_RACK_S2": {
+        "description": "Equipment name for an FOXI_INTERNAL_MISSILE_RACK_S2 internal missile rack",
+        "message": "FOXI Missile Rack"
+    },
+    "FOXI_INTERNAL_MISSILE_RACK_S2_DESCRIPTION": {
+            "description": "Equipment name for an FOXI_INTERNAL_MISSILE_RACK_S2 internal missile rack",
+            "message": "Internal missile bay for 5x medium missiles."
+    },
+    "SYONCANNON_5MW": {
+        "description": "the label for a syoncannon",
+        "message": "5MW foxi-mining cannon"
+    },
+    "SYONCANNON_5MW_DESCRIPTION": {
+        "description": "the description for a syoncanon",
+        "message": "A modified mining canon overclocked for increased efficacy"
+    },
+    "MISSILE_FOXI": {
+        "description": "An choice more effective",
+        "message": "Missile Foxi"
+    },
+
+    "SLOT_UTILITY": {
+        "description": "An choice more effective",
+        "message": "Foxi Slot Utility"
+    }
+}
