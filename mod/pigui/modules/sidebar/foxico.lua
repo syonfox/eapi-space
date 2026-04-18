@@ -103,6 +103,7 @@ local FOXI = {
 
     save_data = {
         init = false,
+        dogtags = 0
     },
 
     display_ads = {
@@ -235,9 +236,70 @@ end
 --Event.Register("onShipDestroyed", onShipDestroyed)
 -- if active mission award player.
 local function onShipDestroyed(ship, attacker)
-    if (attacker == nil) then
-        print("yo")
+
+    print(" onShipDestroyed(ship, attacker)")
+    dumpObject(ship)
+
+
+ -- Ensure base structures exist
+    FOXI.save_data = FOXI.save_data or {}
+    FOXI.save_data.dogtags = FOXI.save_data.dogtags or 0
+    FOXI.save_data.kill_log = FOXI.save_data.kill_log or {}
+
+    -- Safe helpers
+    local function isPlayer(obj)
+        return obj and obj.IsPlayer and obj:IsPlayer()
     end
+
+    local function getLabel(obj)
+        if not obj then return "nil" end
+        if obj.label then return obj.label end
+        if obj.GetLabel then return obj:GetLabel() end
+        if obj.name then return obj.name end
+        return tostring(obj)
+    end
+
+    -- Game time + system (adapt depending on your API)
+    local gameTime = Game and Game.time or os.time()
+    local systemName = (Game and Game.system and Game.system.name) or "unknown_system"
+
+    local destroyedName = getLabel(ship)
+    local attackerName = getLabel(attacker)
+
+    -- Determine scenario
+    if not attacker or attacker == ship then
+        -- Self-destruction
+        if isPlayer(ship) then
+            print("Player destroyed themselves")
+        else
+            print("NPC destroyed themselves")
+        end
+
+    elseif isPlayer(attacker) then
+        -- Player kill
+        print("Player killed:", destroyedName)
+        FOXI.save_data.dogtags = FOXI.save_data.dogtags + 1
+
+    else
+        -- NPC killed something
+        print("NPC killed:", destroyedName, "attacker:", attackerName)
+    endg
+
+    -- Store CSV-style entry
+    -- Format: "time,system,destroyed,attacker"
+    local entry = string.format("%s,%s,%s,%s",
+        tostring(gameTime),
+        tostring(systemName),
+        destroyedName,
+        attackerName
+    )
+
+    table.insert(FOXI.save_data.kill_log, entry)
+
+    -- Debug (optional)
+    print("Kill logged:", entry)
+
+
 
     -- dont count players or other battles not involving player
     if ship.IsPlayer() or (not nil == attacker and not attacker.IsPlayer()) then return end
@@ -950,6 +1012,10 @@ function module:drawBody()
                 -- so we realy want to give the reward on interval 0;
 
                 local key = "repeat" .. i
+
+                -- this may be the first instance of the reward being given?.
+                FOXI.save_data = FOXI.save_data or {}
+                FOXI.save_data.rewards_given = FOXI.save_data.rewards_given or {}
 
                 local lastGiven = FOXI.save_data.rewards_given[key]
                 if lastGiven == null then
