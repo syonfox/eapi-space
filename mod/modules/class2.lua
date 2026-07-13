@@ -79,7 +79,7 @@ StartVariants.register({
 	money          = 5000,
 	equipment = {
 		computer_4     = "misc.autopilot",
-		thruster       = "thruster.default_s1" -- notethat this is required for a valid ship start.
+		thruster       = "thruster.default_s1" -- note that this is required for a valid ship start.
 	},
 	cargo       = {
 	},

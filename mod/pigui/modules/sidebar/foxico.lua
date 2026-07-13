@@ -10,7 +10,7 @@ local ShipDef = require 'ShipDef'
 local Lang = require 'Lang'
 local lui = Lang.GetResource("ui-core");
 local ui = require 'pigui'
-
+local uitimers = require 'pigui.libs.ui-timer'
 local msgbox = require 'pigui.libs.message-box' -- like browser alert
 
 -- cache ui
@@ -93,27 +93,64 @@ local FOXI = {
 
     },
     galactic_news = {
-        "FOXI Co. unveils new Syontrix model, promising enhanced versatility and performance.",
-        "Conflict escalates in Syon 570 as tensions rise between SolFed, Commonwealths, and FOXI Free Traders.",
-        "Syon 570's gas giant refueling stations report record profits, boosting local economy.",
-        "FOXI Co. agent computer plugin now available, revolutionizing in-flight operations across the galaxy.",
-        "Rumors swirl of a clandestine operation by FOXI Co. disrupting key SolFed supply routes.",
+        "FOXI Co. unveils new Syontrix model, promising enhanced versatility and performance.",--fisrt month / year
+        "Conflict escalates in Syon 570 as tensions rise between SolFed, Commonwealths, and FOXI Free Traders.", -- second year
+        "Syon 570's gas giant refueling stations report record profits, boosting local economy.", -- third year
+        "FOXI Co. agent computer plugin now available, revolutionizing in-flight operations across the galaxy.", -- fourth year
+        "Rumors swirl of a clandestine operation by FOXI Co. disrupting key SolFed supply routes.", --so on
         "New Syontric_gvnr_none variant spotted in combat trials, sparking debates over its tactical advantages."
+    },
+
+      galactic_news_flavor = {
+          --todo nearest vessel and nearest body dynamics
+          "Nearest vessel is travelling at approximately %0.1f m/s.", -- nearest vessal
+          "Closest ship distance: %0.2f km. Relative acceleration nominal.", -- nearest vessal
+          "Primary star radiation levels remain within safe operational thresholds.",
+          "Nearest planetary body: %s at %0.2f AU. Estimated transfer time: %0.1f hours.", -- nearest body
+          "Local traffic density increasing. Maintain safe navigation vectors.",
+          "Fuel reserves stable. Estimated jump capacity unchanged.",
+          "Thermal signature of nearby vessels suggests standard civilian activity.",
+          "Gravitational variance minimal. Autopilot efficiency optimal.",
+          "No anomalous signals detected in current sensor sweep.",
+          "Long-range scanners report low activity beyond primary orbit."
+      },
+
+      pioneer_tips = {
+          "Fuel scoops save credits near gas giants.",
+          "Watch heat levels during atmospheric entry.",
+          "Autopilot isn't magic—stay alert.",
+          "Docking clearance avoids expensive fines.",
+          "Mass affects jump range more than you think.",
+          "Upgrade drives before venturing far.",
+          "Pirates love slow cargo haulers.",
+          "Keep spare fuel for emergencies.",
+          "Gravity wells can ruin trajectories quickly.",
+          "Check mission deadlines before accepting.",
+          "Illegal cargo attracts unwanted attention.",
+          "Sensors lie when damaged—repair often.",
+          "High thrust drains fuel faster.",
+          "Plan jumps around refueling points.",
+          "Hostile ships prefer isolated targets.",
+          "Cargo space is profit potential.",
+          "Military drives require specialized fuel.",
+          "Avoid overheating during combat maneuvers.",
+          "Orbit speed matters for safe docking.",
+          "Insurance won't cover reckless flying.",
+          "Upgrade scanners for better situational awareness.",
+          "Stations pay well for rare commodities.",
+          "Keep distance from police patrols if suspicious.",
+          "Manual docking improves pilot skill."
     },
 
     save_data = {
         init = false,
-        dogtags = 0
+        dogtags = 0,
+        joined = false,
+        rewards_given = {}
     },
-
-    display_ads = {
-
-    },
-    joined = false,
-    rewards_given = {}
-
-
 }
+local myid = 1;
+
 -- Function to dump an object in a readable way
 local function dumpObject(obj, indent)
     indent = indent or 0  -- Set default indentation level
@@ -150,8 +187,18 @@ local function dumpFOXI()
 end
 
 
+-- calsed on start? early?
+local function update_display_ads()
+    if FOXI.save_data.joined then
+
+            print("Joined since "..tostring(FOXI.save_data.joined))
+
+        --- if the player is doced at a solfed syon
+    end
+end
+
 -------------------------------------------------------------------------------
--- Pionere mod system save load data system
+-- Pioneer mod system save load data system
 -------------------------------------------------------------------------------
 --Event.Register("onGameStart", onGameStart)
 -- we need to init memory (lets design this not to save stuff for now )
@@ -163,16 +210,16 @@ local function onGameStart()
         msgbox.OK("No worries we are all free peoples. If you wish to join later find us at Syon 570.")
     end
     local function joinCallback()
-        FOXI.save_data.joined = Game.time
-
-        Timer:CallAt(Game.time + 1, function()
-            msgbox.OK(
-                "Welcome. Once you obtain an syontrix ship the mission computer will be fully intagrated.. Good luck!")
-        end)
+        if FOXI.save_data.joined then
+            msgbox.OK("You are already a member. Good luck!")
+        else
+            FOXI.save_data.joined = Game.time
+        end
     end
     local function cancelCallback()
-        FOXI.save_data.joined = 0
-        Timer:CallAt(Game.time + 1, okFineThen)
+        FOXI.save_data.joined = 1 -- this is a fun way to test custom join id.
+        uitimers.createTimer("JOINED", 1, okFineThen)
+--         Timer:CallAt(Game.time + 1, okFineThen)
     end
 
 
@@ -180,19 +227,20 @@ local function onGameStart()
     --FOXI.save_data.rewards_given = {};
     --FOXI.save_data.joined = 0;
     if FOXI.save_data.init == false then
-        msgbox.OK_CANCEL("Welcome to pioneer. Would you like to join the Syon Free Traders & Co?",
-            joinCallback, cancelCallback)
+        msgbox.YES_NO("Welcome to pioneer. Would you like to join the Syon Free Traders & Co?",
+            {yes=joinCallback, no=cancelCallback})
     end
     --if FOXI.save_data.init == false then
     --    msgbox.OK("No worries we are all free peoples. If you wish to join later find us at Syon 570.")
     --end
     print("Player game started: joined since "..tostring(FOXI.save_data.joined))
-    --update_display_ads(player)
+    update_display_ads(player)
 
+    FOXI.save_data.init = true;
 
 
     -- we know that we have valid foxi save data now.
-    FOXI.save_data.init = true;
+
 end
 --Event.Register("onGameEnd", onGameEnd)
 local function onGameEnd()
@@ -214,99 +262,224 @@ local unserialize = function(data)
     dumpFOXI()
 end
 
--- let state = {
--- joined
--- rewards_given
--- missions_offered
---
---}
 
 -------------------------------------------------------------------------------
 -- Event hooks for the game
 -------------------------------------------------------------------------------
 
 --Event.Register("onEnterSystem", onEnterSystem)
--- reload the missions avalible
+-- reload the missions available
+local current_system = nil
+local prev_system = nil
+local third_system = nil
+local jumptimes = {}
+
 local function onEnterSystem(ship)
 
-    print("foxico.lua.frame: ship onEnterSystem" .. tostring(ship))
+    if not ship:IsPlayer() then return end
 
-    if not ship.IsPlayer() then return end -- dont care about non player movments
+    local system = Game.system
+
+    -- shift history (always safe)
+    third_system = prev_system
+    prev_system = current_system
+    current_system = system
+
+    -- track jump time
+    table.insert(jumptimes, Game.time)
+
+    print("Foxi Jump count: " .. #jumptimes)
+
+    print("System: " .. system.name)
+    print("Population: " .. tostring(system.population))
+    print("Lawlessness: " .. tostring(system.lawlessness))
+    dumpVerbose(system, 2)
 end
 --Event.Register("onShipDestroyed", onShipDestroyed)
 -- if active mission award player.
+--				LuaEvent::Queue("onShipDestroyed", this, attacker);
+
+function GetShipIdentity(ship)
+
+    if not ship then
+        return "<no ship>"
+    end
+
+    local varType = GetGenericType(ship)
+    local shipType = "<unknown>"
+    local label = "<no label>"
+    local shipName = "<no name>"
+    local shipClass = "<unknown>"
+
+    -- Ship type
+    pcall(function()
+        shipType = ship:GetShipType()
+    end)
+
+    -- Label
+    pcall(function()
+        label = ship:GetLabel()
+    end)
+
+
+    -- Class if available
+    pcall(function()
+        shipClass = ship:GetShipClass()
+    end)
+
+    return string.format(
+        "[%s]%s::%s::%s",
+        varType,
+        shipClass,
+        shipType,
+        label
+    )
+end
+
+function SafeIsShip(obj, name)
+    if obj == nil then
+        print("ERROR: " .. name .. " is nil")
+        return false
+    end
+
+    if type(obj) ~= "userdata" then
+        print("ERROR: " .. name .. " wrong lua type: " .. type(obj))
+        return false
+    end
+
+    -- Check that this userdata is a Ship object
+    if not obj.isa then
+        print("ERROR: " .. name .. " has no isa() method")
+        return false
+    end
+
+    if not obj:isa("Ship") then
+        print("ERROR: " .. name .. " is not a Ship: " .. tostring(obj))
+        return false
+    end
+
+    return true
+end
+
+
+function SafeIsPlayer(obj, name)
+    if not SafeIsShip(obj, name) then
+        return false
+    end
+
+    if not obj.IsPlayer then
+        print("ERROR: " .. name .. " has no IsPlayer() method")
+        return false
+    end
+
+    return obj:IsPlayer()
+end
+
+function GetGenericType(obj)
+    if obj == nil then
+        return "nil"
+    end
+
+    if type(obj) ~= "userdata" then
+        return type(obj)
+    end
+
+    local mt = getmetatable(obj)
+
+    if mt and mt.type then
+        return mt.type   -- e.g. "Ship", "Planet", "Star", "Missile"
+    end
+
+    return "unknown_userdata"
+end
+
+local function LogKiller(obj)
+    FOXI = FOXI or {}
+    FOXI.save_data = FOXI.save_data or {}
+    FOXI.save_data.killers = FOXI.save_data.killers or {}
+
+    local t = GetGenericType(obj)
+
+    FOXI.save_data.killers[t] = (FOXI.save_data.killers[t] or 0) + 1
+
+    print("Killer type:", t, "count:", FOXI.save_data.killers[t])
+
+    return t
+end
+
+
 local function onShipDestroyed(ship, attacker)
 
-    print(" onShipDestroyed(ship, attacker)")
-    dumpObject(ship)
+    print(" onShipDestroyed(ship, attacker) =<not not>=> ("..tostring(not not ship)..", "..tostring(not not attacker)..")")
 
 
- -- Ensure base structures exist
-    FOXI.save_data = FOXI.save_data or {}
-    FOXI.save_data.dogtags = FOXI.save_data.dogtags or 0
-    FOXI.save_data.kill_log = FOXI.save_data.kill_log or {}
+    local killedIsPlayer = false
+    local attackerExists = false
+    local attackerIsPlayer = false
 
-    -- Safe helpers
-    local function isPlayer(obj)
-        return obj and obj.IsPlayer and obj:IsPlayer()
+    if SafeIsShip(ship, "killed ship") then
+        killedIsPlayer = SafeIsPlayer(ship, "killed ship")
     end
 
-    local function getLabel(obj)
-        if not obj then return "nil" end
-        if obj.label then return obj.label end
-        if obj.GetLabel then return obj:GetLabel() end
-        if obj.name then return obj.name end
-        return tostring(obj)
+
+    if SafeIsShip(attacker, "attacker") then
+        attackerExists = true
+        attackerIsPlayer = SafeIsPlayer(attacker, "attacker")
+    elseif attacker ~= nil then
+        print("ERROR: attacker exists but is not a Ship:", tostring(attacker))
+        print("GetGenericType: "..GetGenericType(attacker))
     end
 
-    -- Game time + system (adapt depending on your API)
+    print("killedIsPlayer =", killedIsPlayer)
+    print("attackerExists =", attackerExists)
+    print("attackerIsPlayer =", attackerIsPlayer)
+
+    -- CASE 1: Player died
+    if killedIsPlayer then
+        print("PLAYER SHIP DESTROYED")
+        -- trigger custom endgame here
+        --return
+
+
+    -- CASE 2: Player killed someone
+    elseif attackerIsPlayer then
+        print("PLAYER GOT THE KILL")
+        FOXI.save_data.dogtags = FOXI.save_data.dogtags + 1;
+        -- give credit here
+        --return
+
+    -- CASE 3: NPC killed NPC
+    elseif attackerExists then
+        print("NPC vs NPC combat")
+--         dumpVerbose(attacker, 2)
+        LogKiller(attacker)
+        --return
+    else
+        print("SHIP DESTROYED WITH NO ATTACKER")
+    end
+
+    local killed = GetShipIdentity(ship)
+    local killer = GetShipIdentity(attacker)
+
+    local killerType = type(attacker)
+
+    print("Killer [",killerType,"]", killer, " killed ", killed)
+
+
+--     -- Game time + system (adapt depending on your API)
     local gameTime = Game and Game.time or os.time()
     local systemName = (Game and Game.system and Game.system.name) or "unknown_system"
-
-    local destroyedName = getLabel(ship)
-    local attackerName = getLabel(attacker)
-
-    -- Determine scenario
-    if not attacker or attacker == ship then
-        -- Self-destruction
-        if isPlayer(ship) then
-            print("Player destroyed themselves")
-        else
-            print("NPC destroyed themselves")
-        end
-
-    elseif isPlayer(attacker) then
-        -- Player kill
-        print("Player killed:", destroyedName)
-        FOXI.save_data.dogtags = FOXI.save_data.dogtags + 1
-
-    else
-        -- NPC killed something
-        print("NPC killed:", destroyedName, "attacker:", attackerName)
-    endg
-
-    -- Store CSV-style entry
-    -- Format: "time,system,destroyed,attacker"
+--
     local entry = string.format("%s,%s,%s,%s",
         tostring(gameTime),
         tostring(systemName),
-        destroyedName,
-        attackerName
+        killed,
+        killer
     )
 
     table.insert(FOXI.save_data.kill_log, entry)
-
-    -- Debug (optional)
     print("Kill logged:", entry)
 
-
-
-    -- dont count players or other battles not involving player
-    if ship.IsPlayer() or (not nil == attacker and not attacker.IsPlayer()) then return end
-
-    local SF = "Solar Federation"
-    local CW = "Commonwealth of Independent Worlds"
-    local SY = "Syon Free Traders & Company"
 
     --For each ship killed in enemy territory the faction will pay 1000cr
     --
@@ -381,10 +554,6 @@ local function uiopen()
     print("foxico::uiopen.logPlayerInfo()")
     logPlayerInfo(ship);
 
-
-    --dumpTable(ship, 2)
-
-
     -- ok idk what to do here but if needed lets put them in the same place
     -- this is called when the tab is switched back to flight view and the ui is opened
     -- OR when the user click the button to open the ui.  aka when first fram is done rendering?
@@ -397,19 +566,48 @@ end
 -------------------------------------------------------------------------------
 --FOXI GALACTIC NEWS (no we did not invent ftl coms) its static news updated when you got to the stations .. aka never updated .. todo
 -------------------------------------------------------------------------------
-local newsIndex = 1; -- todo make the increment wait one month before releasing the next news.
+local newsIndex = 1
+local totalNews = 1 -- how many are unlocked
+
 
 -- Array of FOXI.GalacticNews
 -- Function to pick a random news item and display it
 local function displayRandomNews()
-    --         local randomIndex = math.random(1, #foxiGalacticNews)
-    local selectedNews = FOXI.galactic_news[newsIndex]
-    newsIndex = newsIndex + 1
-    if (newsIndex > #FOXI.galactic_news) then
-        newsIndex = 1
+
+    if not FOXI.save_data.joined then
+        msgbox.OK("You must be a member to get news. Join from Syon 570.")
+        return
     end
 
-    msgbox.OK(selectedNews)
+    local joinTime = FOXI.save_data.joined
+    local elapsed = Game.time - joinTime
+
+    local secondsInMonth = 30 * 24 * 60 * 60
+    local secondsInYear = 365 * 24 * 60 * 60
+
+    local monthsPassed = math.floor(elapsed / secondsInMonth)
+    local yearsPassed = math.floor(elapsed / secondsInYear)
+
+    -- unlock more news each year
+    local newsLength = #FOXI.galactic_news -- total available news
+    totalNews = math.min(1 + yearsPassed, newsLength)
+
+
+    -- cycle through unlocked news monthly
+    newsIndex = (monthsPassed % totalNews) + 1
+
+    local selectedNews = FOXI.galactic_news[newsIndex]
+
+
+    -- Use Game.time (in years), convert to seconds-ish scale
+    local seed = math.floor(Game.time * 100000)
+
+    local tipIndex = (seed % #FOXI.pioneer_tips) + 1
+    local flvIndex = (seed % #FOXI.galactic_news_flavor) + 1
+
+    local msg = selectedNews .. "\n" .. FOXI.galactic_news_flavor[flvIndex] .. "\n" .. FOXI.pioneer_tips[tipIndex]
+    msgbox.OK(msg)
+
 end
 
 
@@ -458,19 +656,19 @@ local function check_foxi_missions()
             contractor = SY,
             name = "Establish Pub",
             --location = "NO_CENTRAL_GOVERNANCE", -- only show if this system has nocental governance
-            avalible = inSYClean and isGovTypeNone
+            available = inSYClean and isGovTypeNone
         },
         {
             -- only sho
             contractor = CW,
             name = "Disureupt The Solar Federation",
-            avalible = inSFClean and in_system_of(SF)
+            available = inSFClean and in_system_of(SF)
         },
         {
             -- only sho
             contractor = SF,
             name = "Disureupt The Commonwealth",
-            avalible = inCWClean and in_system_of(CW)
+            available = inCWClean and in_system_of(CW)
         }
     }
 
@@ -506,11 +704,7 @@ local function check_date_and_docked(time, faction, teclevel)
     --local isDockedHighTec = target.
 end
 
-local function update_display_ads()
-    if FOXI.save_data.joined then
-        --- if the player is doced at a solfed syon
-    end
-end
+
 local function draw_display_ads()
 
 
@@ -654,6 +848,7 @@ end
 ------------------------------
 
 
+--DRAWING FUNCTION FIRST
 function module:drawTitle()
     local cargoMgr = self.ship:GetComponent("CargoManager")
 
@@ -681,18 +876,198 @@ function module:drawTitle()
     local totalSpace = cargoMgr:GetTotalSpace()
 end
 
+--DEBUG FUNCTIONS FOR FUMPING
+--DEBUG FUNCTIONS FOR FUMPING
+--DEBUG FUNCTIONS FOR FUMPING
+ function dumpTableVerbose(tbl, depth, seen)
+        depth = depth or 0
+        seen = seen or {}
+
+        if depth > 5 then
+            print(string.rep("  ", depth) .. "<max depth>")
+            return
+        end
+
+        if seen[tbl] then
+            print(string.rep("  ", depth) .. "<already seen>")
+            return
+        end
+
+        seen[tbl] = true
+
+        for k, v in pairs(tbl) do
+            local prefix = string.rep("  ", depth) .. tostring(k) .. " = "
+
+            if type(v) == "table" then
+                print(prefix .. "{")
+                dumpTableVerbose(v, depth + 1, seen)
+                print(string.rep("  ", depth) .. "}")
+            else
+                print(prefix .. tostring(v) .. " (" .. type(v) .. ")")
+            end
+        end
+    end
+
+
+-- DEBUG FUNCTION: ROBUST ARBITRARY OBJECT DUMP
+function dumpVerbose(obj, depth, seen, maxDepth)
+    depth = depth or 0
+    seen = seen or {}
+    maxDepth = maxDepth or 5
+
+    local indent = string.rep("  ", depth)
+
+    -- Safety: identify type first
+    local objType = type(obj)
+
+    -- Maximum recursion depth
+    if depth > maxDepth then
+        print(indent .. "<max depth reached>")
+        return
+    end
+
+    -- Nil
+    if obj == nil then
+        print(indent .. "nil")
+        return
+    end
+
+    -- Primitive values
+    if objType ~= "table" and objType ~= "userdata" then
+        print(indent .. tostring(obj) .. " (" .. objType .. ")")
+        return
+    end
+
+    -- Already visited check (handles circular references)
+    if seen[obj] then
+        print(indent .. "<already seen> " .. tostring(obj))
+        return
+    end
+
+    seen[obj] = true
+
+    -- Tables can be iterated
+    if objType == "table" then
+        print(indent .. "TABLE " .. tostring(obj) .. " {")
+
+        for k, v in pairs(obj) do
+            print(indent .. "  [" .. tostring(k) .. "] =")
+            dumpVerbose(v, depth + 1, seen, maxDepth)
+        end
+
+        print(indent .. "}")
+
+    -- Userdata cannot be pairs()'d
+    elseif objType == "userdata" then
+        print(indent .. "USERDATA " .. tostring(obj))
+
+        -- Try metatable inspection
+        local ok, meta = pcall(getmetatable, obj)
+
+        if ok and meta then
+            print(indent .. "  metatable:")
+            dumpVerbose(meta, depth + 1, seen, maxDepth)
+        else
+            print(indent .. "  <no accessible metatable>")
+        end
+    end
+end
+
+
+    local function dumpEquipmentSummary(equip)
+        if not equip then
+            print("No equipment")
+            return
+        end
+
+        print("========== EQUIPMENT SUMMARY ==========")
+
+        -- Identity
+        print("Name:        " .. tostring(equip:GetName()))
+        print("ID:          " .. tostring(equip.id))
+        print("Class:       " .. tostring(equip.meta and equip.meta.class))
+        print("Tech Level:  " .. tostring(equip.tech_level))
+        print("Price:       " .. tostring(equip.price))
+
+        -- Physical
+        print("")
+        print("--- Physical ---")
+        print("Mass:        " .. tostring(equip.mass))
+        print("Volume:      " .. tostring(equip.volume))
+
+        -- Slot
+        print("")
+        print("--- Slot ---")
+        if equip.slot then
+            print("Type:        " .. tostring(equip.slot.type))
+            print("Size:        " .. tostring(equip.slot.size))
+            print("Hardpoint:   " .. tostring(equip.slot.hardpoint))
+        else
+            print("No slot requirement")
+        end
+
+        -- Capabilities
+        print("")
+        print("--- Capabilities ---")
+        if equip.capabilities then
+            for k,v in pairs(equip.capabilities) do
+                print(k .. ": " .. tostring(v))
+            end
+        else
+            print("None")
+        end
+
+        -- Fuel
+        print("")
+        print("--- Fuel ---")
+        if equip.fuel then
+            print("Fuel ID:     " .. tostring(equip.fuel.name))
+            print("Fuel price:  " .. tostring(equip.fuel.price))
+        else
+            print("None")
+        end
+
+        -- Hyperdrive specific
+        if equip.fuel_resv_size then
+            print("")
+            print("--- Hyperdrive ---")
+            print("Class:       " .. tostring(equip.capabilities.hyperclass))
+            print("Efficiency:  " .. tostring(equip.factor_eff))
+            print("Fuel reserve:" .. tostring(equip.fuel_resv_size))
+        end
+
+        -- Provided slots
+        print("")
+        print("--- Provided Slots ---")
+        if equip.provides_slots then
+            for id,slot in pairs(equip.provides_slots) do
+                print(
+                    tostring(id) ..
+                    ": " ..
+                    tostring(slot.type) ..
+                    " size=" ..
+                    tostring(slot.size)
+                )
+            end
+        else
+            print("None")
+        end
+    end
+--BACK TO UI CODE
+--BACK TO UI CODE
+--BACK TO UI CODE
 
 local bodyFrame = 0;
-
 local lastFrameTime = 0;  -- stores the initial game time
 local frameCount = 1000
 
 function module:drawBody()
     bodyFrame=bodyFrame+1
 
-
-
     local g = Game;
+
+    local isMember = not not (FOXI.save_data.joined)
+
 
     if bodyFrame % frameCount == 0 then
 
@@ -715,10 +1090,8 @@ function module:drawBody()
     ui.spacing(2)
     local fg = colors.hyperspaceInfo
     local bg = colors.lightBlackBackground
-
-    local isMember = not (FOXI.save_data.joined == 0)
-
-
+    local warn = colors.navTarget
+    local danger = colors.combatTarget
 
 
     -- use has not recieved there free gift
@@ -731,7 +1104,8 @@ function module:drawBody()
     --lua
 
     function time_diff_in_months(start_time, current_time)
-        if start_time == false then return 0 end
+        if not start_time then return 0 end -- not checks false and nil and 0?
+
 
         local secondsDifference = current_time - start_time      -- Calculate difference in seconds
         -- Approximate seconds per month
@@ -745,28 +1119,36 @@ function module:drawBody()
 
     local monthsJoined = math.floor(monthsJoinedFloat)
 
-    if isMember ~= false then
+
+
+
+    if FOXI.save_data.joined then
         ui.textAlignedColored("Active member for " .. tostring(monthsJoinedFloat) .. " months!", 0.1, fg)
         ui.textAlignedColored("Member Id: " .. tostring(FOXI.save_data.joined), 0.1, fg)
         ui.sameLine()
         if ui.button("Leave now") then
             FOXI.save_data.joined = false
         end
+
+    else
+        ui.textAlignedColored("Member status: " .. tostring(FOXI.save_data.joined), 0.1, fg)
     end
 
-    local function giveMissles(num)
-        --local missiles = Game.player:GetEquip('missile')
+    ui.textAlignedColored("IsMember: " .. tostring(isMember), 0.2, bg)
 
-        --local numAdded = Game.player:AddEquip(Equipment.misc["missile_smart"], 2)
 
-       --Game = require("Game")
-       --Equipment = require("Equipment")
+    ui.textAlignedColored("* WARNING *: This mod / rewards are not finished", 0.2, warn)
+
+-- i think it just depends on Game and Equipment.
+   local function giveMissles(num)
 
 	    local equipSet = Game.player:GetComponent('EquipSet')
         local missile = Equipment.Get("missile.guided_s2")
+        --todo: give unguided rocket or whatever missiles is supported by the ship
+        print("Attempting to dump Missile " )
 
-        --equipSet:HasCompatibleSlotForEquipment(m) --true
-        --equipSet:CanInstallLoose(m) -- false
+        dumpTableVerbose(missile)
+
         print("Attempting to give player " .. num .. missile:GetName())
         local s = equipSet:GetFreeSlotForEquip(missile)
         for i=1,num do
@@ -783,61 +1165,129 @@ function module:drawBody()
         return numAdded
     end
 
-    local function giveLaser(name)
-        --local missiles = Game.player:GetEquip('missile')
-        if name == nil then name = "syoncanon_5mw" end
+    local function giveHyperdrive(level, mil)
 
-	    local equipSet = Game.player:GetComponent('EquipSet')
-        local laser = Equipment.Get("laser."..name)
-        local m = missile:Instance()
+        if not level then level = 1 end
+        if mil == nil then mil = false end
 
-        print("Attempting to give player a ".. laser:GetName())
+      local drive = Game.player:GetInstalledHyperdrive()
 
-        local s = equipSet:GetFreeSlotForEquip(laser)
-        if s ~= nil then
-            r = equipSet:Install(m,s)
-            print("Laser Installed = " .. tostring(r))
+        if drive then
+            print("Player has hyperspace drive already.")
+            print("Name: " .. drive:GetName())
+            print("ID: " .. tostring(drive.id))
+
+            dumpTableVerbose(drive)
+            dumpEquipmentSummary(drive)
+
+
         else
-            print("unable to find slot for laser")
+            print("No hyperdrive installed")
         end
 
-        return nil
+
+        local equipSet = Game.player:GetComponent('EquipSet')
+
+        -- build correct equipment ID
+        local id = "hyperspace.hyperdrive"
+
+        if mil then
+            id = id .. "_mil" .. tostring(level)
+        else
+            id = id .. "_" .. tostring(level)
+        end
+
+
+        local hyperdrive = Equipment.Get(id)
+
+        if not hyperdrive then
+            print("Invalid hyperdrive: " .. id)
+            return false
+        end
+
+
+        print("Attempting to give player " .. hyperdrive:GetName())
+
+        local slot = equipSet:GetFreeSlotForEquip(hyperdrive)
+
+        if slot then
+            local instance = hyperdrive:Instance()
+            local result = equipSet:Install(instance, slot)
+            print("Hyperdrive Installed = " .. tostring(result))
+            return result
+        elseif level > 0 then
+            level = level-1
+            print("Hyperdrive slot not available trying Level-- = " .. level)
+            giveHyperdrive(level, mil)
+        else
+            print("No slot available for hyperdrive")
+            return false
+        end
     end
 
+
+    local function giveLaser(name)
+
+        if name == nil then
+            name = "syoncannon_5mw"
+        end
+
+        local equipSet = Game.player:GetComponent('EquipSet')
+
+        local laser = Equipment.Get("laser." .. name)
+
+        if not laser then
+            print("Invalid laser: laser." .. name)
+            return false
+        end
+
+        print("Attempting to give player a " .. laser:GetName())
+
+        local instance = laser:Instance()
+
+        local slot = equipSet:GetFreeSlotForEquip(instance)
+
+        if slot then
+            local result = equipSet:Install(instance, slot)
+            print("Laser Installed = " .. tostring(result))
+            return result
+        else
+            print("Unable to find compatible slot for laser")
+            return false
+        end
+    end
+
+
     local rewardMap = {
-        join = {
-            ad = "Offer: Join Syon Free Traders & Company to recieave 2 free farm machinary.",
+        join = { -- give 4 missiles at the start of the game (or if you leave and join resting your long term timer)
+            ad = "Offer: Join Syon Free Traders & Company to get 4 free farm equipment.",
             btn = "Share Join Offer",
             more =
-                "Psst.. I see your not a member yet, we have 2 smart missles. caugh.. caugh... I mean farm machinary laying"
+                "Psst.. I see your not a member yet, we have 2 smart missiles. cough.. cough... I mean farm machinery laying"
                 .. " around. They are yours if you join today.",
             ok = function()
                 FOXI.save_data.joined = Game.time
-
-                giveMissles(2);
-
+                giveMissles(4);
                 return nil -- signifies no error
             end,
             cancel = "All good its a free system. Good luck out there!",
             thanks = "Cool We have loaded the equipment. Good luck out there."
-        }, -- recieve 2 smart misile to join Syon Free traders
-        repeat1 = {
+        },
+        repeat1 = { -- receive 2 smart missile each month for being a member (can save your ass in combat)
             ad = "Offer: Valued member surplus offer receive 2 free farm machinery.",
             btn = "Share Member Offer",
             more =
-                "Psst.. Hi borther, we have 2 smart missiles. caugh.. caugh... I mean farm machinery laying"
+                "Psst.. Hi borther, we have 2 smart missiles. cough.. cough... I mean farm machinery laying"
                 .. "around. Do you want them?",
             ok = function()
-                --FOXI.save_data.joined = Game.time
                 giveMissles(2);
-
                 return nil; -- in the backed we save that this has been recieved for this month
             end,
             cancel = "All good its a free system. Good luck out there!",
             thanks = "Cool We have loaded the equipment. Good luck out there."
             --repeatProgram = true,
         }, -- thanks your first month of service here are 2 free smart_missles
-        month6 = {
+        month6 = { -- during your 6th month give a cool gun
             ad = "Offer: Valued member surplus offer receive 1 free mining laser.",
             btn = "First Month Bonus",
             more =
@@ -846,16 +1296,16 @@ function module:drawBody()
                 .. ". Do you want it?",
             ok = function()
                 --FOXI.save_data.joined = Game.time
-                giveLaser("syoncanon_5mw");
+                giveLaser("syoncannon_5mw");
 
                 return nil; -- in the backed we save that this has been recieved for this month
             end,
             cancel = "All good its a free system. Good luck out there!",
             thanks = "Cool We have loaded the equipment. Good luck out there."
-        }, -- 6 months reciev a free syoncanon
+        }, -- 6 months reciev a free syoncanon TODO: finish the reward balance and acounting
         month12 = {
             ad =
-            "Congratulation on one year of membership: Come to syon570 and get a syontrix ship at 84% off! Trade in offer avalible!",
+            "Congratulation on one year of membership: Come to syon570 and get a syontrix ship at 84% off! Trade in offer available!",
             btn = "One Year Agent",
             requireFaction = SY,
             notHere = "Im sorry this offer is only available at " .. SY .. " starports. Sector 4, 2, 5",
@@ -866,7 +1316,7 @@ function module:drawBody()
                 ..". Do you want it?",
             ok = function()
                 --FOXI.save_data.joined = Game.time
-                giveLaser("syoncanon_5mw");
+                giveLaser("syoncannon_11mw");
 
                 return nil; -- in the backed we save that this has been recieved for this month
             end,
@@ -887,13 +1337,15 @@ function module:drawBody()
                 --FOXI.save_data.joined = Game.time
                 giveMissles(2);
 
-                return nil; -- in the backed we save that this has been recieved for this month
+                giveHyperdrive(3, false)
+
+                return nil; -- in the backed we save that this has been received for this month
             end,
             cancel = "All good its a free system. Good luck out there!",
             thanks = "Cool We have loaded the equipment. Good luck out there."
         },             --
 
-        --month60 = {},  -- 5 year reward come to syon to git afull load of foxi_missile
+        --month60 = {},  -- 5 year reward come to syon to get a full load of foxi_missile
         --month120 = {}, -- 10 year reward syontrix gvrn none
         repeat600 = {
             ad = "Offer: Congratulations on 50 years of service! Enjoy a free pub kit on us. Pick up any SFT&C System.",
@@ -908,7 +1360,7 @@ function module:drawBody()
             },
             ok = function()
                 --FOXI.save_data.joined = Game.time
-                giveMissles(2);
+                giveLaser("syoncannon_5mw");
 
                 return nil; -- in the backed we save that this has been recieved for this month
             end,
@@ -927,7 +1379,7 @@ function module:drawBody()
     -- show the advisement and save the interval to save_data if user accepts rewards.
     local function advertise_reward(key, months, interval)
         -- this is called from draw  when a rewards is triggered.
-
+        --print("Advertise: " .. key)
         if interval == nil then
             interval = 1;
         end
@@ -935,31 +1387,19 @@ function module:drawBody()
 
 
         local r = FOXI.save_data.rewards_given[key]
-        if r == nil then
-            --print("displaying reward for first time key: " .. key)
-        else
-
-            if(logDebugFrame) then
-                if (r == -1) then
-                    print("Debug reward["..key.."] save data set to -1; interval:"..interval.."mounths: " .. months)
-                else
-                --ensure that
-                    print("Displaying rewords:" .. key .. ": for nths time" .. FOXI.save_data.rewards_given[key])
-                end
-            end
+        local h = FOXI.save_data.rewards_given[key .. "_hist"]
+        if r and h and #h > 0  then
+            --print("this rewards has been given before:  ".. #h .. " times " .. key .. " has been given, most recent is " .. r )
         end
-
 
         local reward = rewardMap[key];
 
-
-
-        if reward == nil then return nil end
+        if reward == nil then return nil end -- will setting a reward to nil make it never again gettable or will it be like new?
 
 
 
        -- print(key .. ".ad = " .. reward.ad)
-        ui.textWrapped(reward.ad)
+        ui.textWrapped("["..#h.."]"..reward.ad)
 
         if ui.button(reward.btn) then       -- here we are
             
@@ -970,20 +1410,41 @@ function module:drawBody()
                 return msg
             end
 
-            msgbox.OK_CANCEL(formatMessage(reward.more), function()
+            msgbox.YES_NO(formatMessage(reward.more), {
+                yes = function()
                     local err = reward.ok() -- call the function this is expected to return somthing if there is any problem .
-                    if not err == nil then
-                        Timer:CallAt(Game.time + 2, function()
+--                     if not err == nil then
+                        myid = myid+1
+                        uitimers.createTimer("rewardTimerYes"..myid ,Game.time + 2, function()
                             msgbox.OK(reward.thanks)
                         end)
-                        FOXI.save_data.rewards_given[key] = interval;
-                    end
+
+                        --todo key+ "_hist" = [] and push the time of now that it was given.
+                        -- Create history table if missing
+                        print("Rewards_accepted: ".. key.. "<-key | interval->" .. interval)
+
+                        if FOXI.save_data.rewards_given[key .. "_hist"] == nil then
+                            FOXI.save_data.rewards_given[key .. "_hist"] = {}
+                        end
+
+                        -- Add current game time
+                        table.insert(
+                            FOXI.save_data.rewards_given[key .. "_hist"],
+                            Game.time
+                        )
+
+                        -- Keep the existing interval value
+                        FOXI.save_data.rewards_given[key] = months
+--                     end
                 end,
-                function() -- cancel
-                    Timer:CallAt(Game.time + 2, function()
+                no = function() -- cancel
+                    myid = myid + 1;
+                    uitimers.createTimer("rewardTimerNo"..myid, 2, function()
                         msgbox.OK(reward.cancel)
                     end)
-                end)
+                end
+                }
+            )
         end
     end
 
@@ -993,14 +1454,17 @@ function module:drawBody()
     -- maybe they can use the mission interface
     --if not Game.player then return nil end
 
-    if (not isMember) then
-        advertise_reward("join", 0)
+
+    if not FOXI.save_data.joined then
+
+       advertise_reward("join", 0)
+
     else
         --local monthsJoined = math.floor(time_diff_in_months(FOXI.save_data.joined, Game.time))
 
         local key = "month" .. monthsJoined
-
-        local reward = rewardMap[key]; -- there rewards will only be avalible on the month they are advertised.
+        -- todo: fix the fixed reward sce3dule balance.
+        local reward = rewardMap[key]; -- there rewards will only be available on the month they are advertised.
         if reward == nil then          -- if no rewards is advertised then check for repeat rewards
             --local reward = rewardMap(key);
 
@@ -1042,6 +1506,7 @@ function module:drawBody()
             -- 1 year 0.10+ 0.01* years of service bonus on missions
             -- 5 year - free pub kit
         else -- we have found a reward thats valid for this month in the map. ()
+            print("advertise reward" .. key)
             advertise_reward(key, reward, monthsJoined)
         end
     end
@@ -1065,7 +1530,7 @@ function module:drawBody()
               for _, mission in ipairs(missions) do
                         --ui.text(mission.title)
                         local c
-                        if mission.enabled
+                        if not mission.available
                             then c = fg
                             else c = colors.alertRed
                         end
@@ -1109,12 +1574,32 @@ function module:drawBody()
     else
         ui.text("Please enjoy this free info")
     end
+    if ui.button("Log Debug GPS", Vector2(150, 0)) then
+
+        local alt, spd, latitude, longitude = g.player:GetGPS()
+        print("gps alt: " .. alt)
+        print("gps spd: " .. spd)
+        print("gps lat: " .. latitude)
+        print("gps lon: " .. longitude)
+
+        local pos = g.player:GetPosition()
+        print("type pos: "..type(pos))
+
+        dumpVerbose(pos)
+    end
+    ui.sameLine()
+    if ui.button("Log Player", Vector2(150, 0)) then
+        dumpVerbose(g.player)
+    end
+
+--         ui.text("GPS: ", g.player:GetGPS())
+--
 end
 
 function module:refresh()
     self.ship = Game.player
 
-    -- this is called when the ui is opened with the button or the user navicates back to the game screen from
+    -- this is called when the ui is opened with the button or the user navigates back to the game screen from
     -- the system menu
     uiopen()
 end

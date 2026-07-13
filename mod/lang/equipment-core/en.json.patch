@@ -13,13 +13,20 @@
     },
     "SYONCANNON_5MW_DESCRIPTION": {
         "description": "the description for a syoncanon",
-        "message": "A modified mining canon overclocked for increased efficacy"
+        "message": "A modified mining cannon overclocked for increased efficacy"
+    },
+    "SYONCANNON_11MW": {
+        "description": "the label for a syoncannon",
+        "message": "11MW foxi-mining canon. Full power."
+    },
+    "SYONCANNON_11MW_DESCRIPTION": {
+        "description": "the description for a syoncanon",
+        "message": "A reinvented mining cannon 2x capacitor bank and overclocked for increased efficacy"
     },
     "MISSILE_FOXI": {
         "description": "An choice more effective",
         "message": "Missile Foxi"
     },
-
     "SLOT_UTILITY": {
         "description": "An choice more effective",
         "message": "Foxi Slot Utility"

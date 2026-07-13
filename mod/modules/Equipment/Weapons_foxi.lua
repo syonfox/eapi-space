@@ -15,18 +15,34 @@ local LaserType = EquipTypes.LaserType
 --===============================================
 -- Mining Cannons
 --===============================================
---
 Equipment.Register("laser.syoncannon_5mw", LaserType.New {
 	l10n_key="SYONCANNON_5MW",
 	price=13700, purchasable=true, tech_level=5,
 	mass=6, volume=6, capabilities={},
 	slot = { type="weapon.mining", size=2, hardpoint=true },
 	laser_stats = {
-		lifespan=8, speed=1500, damage=5500, rechargeTime=0.75, length=60,
+		lifespan=10, speed=1500, damage=6500, rechargeTime=0.75, length=60,
 		width=8, beam=0, dual=0, mining=1, rgba_r = 45, rgba_g = 232, rgba_b = 10, rgba_a = 200
 	},
 	icon_name="equip_mining_laser"
 })
+
+Equipment.Register("laser.syoncannon_11mw", LaserType.New {
+	l10n_key="SYONCANNON_11MW",
+	price=24000, purchasable=true, tech_level=9,
+	mass=12, volume=12, capabilities={
+        foxib = 3, -- todo tetect this and allow a triple burst shot to be charged and released. this mode prioritizes aiming and hitting bursts
+        foxic = 2 -- this is the cool down multiplier. so say one shot normally takes 0.75s 3 shots would take 2.25s
+        -- but because of a 2x multiplier the next burst is ready after 4.5s
+    },
+	slot = { type="weapon.mining", size=2, hardpoint=true },
+	laser_stats = {
+		lifespan=15, speed=1500, damage=11500, rechargeTime=0.75, length=80,
+		width=11, beam=0, dual=0, mining=1, rgba_r = 228, rgba_g = 31, rgba_b = 233, rgba_a = 200
+	},
+	icon_name="equip_mining_laser"
+})
+
 
 --
 -- Equipment.Register("laser.miningcannon_5mw", LaserType.New {
