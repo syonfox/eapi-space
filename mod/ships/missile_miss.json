@@ -1,0 +1,14 @@
+{
+  "tag" : "missile",
+  "angular_thrust" : 20000.0,
+  "forward_thrust" : 350000.0,
+  "reverse_thrust" : 100000.0,
+  "hull_mass" : 2,
+  "model" : "missile",
+  "name" : "MISSILE_MISS",
+  "price" : 200.0,
+  "down_thrust" : 0.2,
+  "left_thrust" : 0.2,
+  "right_thrust" : 0.2,
+  "up_thrust" : 0.2
+}

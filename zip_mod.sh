@@ -2,11 +2,14 @@
 
 # Usage check
 if [ -z "$1" ]; then
-  echo "Usage: $0 <path-to-mod-folder>"
+  echo "Usage: $0 <path-to-mod-folder> [y/n]"
+  echo "Options: answer [y]es or [n]o to install the modt to .pioneer folder"
   exit 1
 fi
 
+
 mod_dir="$1"
+
 
 # Ensure mod directory exists
 if [ ! -d "$mod_dir" ]; then
@@ -43,13 +46,21 @@ release_file="$(pwd)/${release_dir}/syon_mod_${current_branch}_${current_date}.z
 
 echo "Created release archive: $release_file"
 
-echo "$ cp $release_file /home/user/.pioneer/mods/"
-read -p "Do you want to install to /home/user/.pioneer/mods/? [y/N] " answer
+bash ./gen_release_page.sh $release_file
 
-if [[ "$answer" =~ ^[Yy]$ ]]; then
-  echo "Installing $release_file..."
-  cp "$release_file" "/home/user/.pioneer/mods/"
-  echo "Install complete."
+
+pioneer_mod_folder=/home/user/.pioneer/mods/
+
+
+if [ -z "$2" ]; then
+  read -r -p "Do you want to install $release_file to $pioneer_mod_folder? [y/N] " answer
 else
-  echo "Install skipped."
+  answer="$2"
+  echo "Pre input answer: $answer"
 fi
+
+[[ "$answer" =~ ^[Yy]$ ]] || exit 0
+
+echo "Installing $release_file..."
+cp "$release_file" "$pioneer_mod_folder"
+echo "Install complete."

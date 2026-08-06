@@ -23,9 +23,17 @@
         "description": "the description for a syoncanon",
         "message": "A reinvented mining cannon 2x capacitor bank and overclocked for increased efficacy"
     },
-    "MISSILE_FOXI": {
+    "MISSILE_MISS": {
         "description": "An choice more effective",
         "message": "Missile Foxi"
+    },
+    "MISSILE_MISS_DESCRIPTION": {
+        "description": "Equipment description",
+        "message": "Basic unguided rocket. Point, fire, and hope—no lock, no mercy, no guarantee. Стандартни управляеми ракети стреляй и забрави!"
+    },
+    "MISSILE_MISS_FLAVOURTEXT": {
+        "description": "Equipment description",
+        "message": "Foxi Mass 400 --fire-and-forget, da? You lock, you launch, kaj poste... maybe boom, maybe nyet. Teknologio not garantio, kamarad. ECM kaj countermeasures? Ili tre volonte ruin la party. Still, she flies true... when she feels like it."
     },
     "SLOT_UTILITY": {
         "description": "An choice more effective",

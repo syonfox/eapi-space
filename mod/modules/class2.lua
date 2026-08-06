@@ -79,10 +79,30 @@ StartVariants.register({
 	money          = 5000,
 	equipment = {
 		computer_4     = "misc.autopilot",
-		thruster       = "thruster.default_s1" -- note that this is required for a valid ship start.
+		thruster       = "thruster.default_s1", -- note that this is required for a valid ship start.
 	},
-	cargo       = {
-	},
+    cargo = { plastics = 10, metal_ore = 5, hydrogen = 65, carbon_ore = 87 , radioactives = 85},
+
 	pattern     = 2,
     colors = { Color('FF7F00'), Color('E0E0E0'), Color('0000FF') }
+
+})
+
+StartVariants.register({
+	name           = 'Future Operation Entity Intelligence',
+	desc           = "REDACTED",
+	location       = SystemPath.New(4, 2, 5, 0, 3),
+	logmsg         = lui.START_LOG_ENTRY_COURIER_1,
+	shipType       = 'foei',
+	money          = 1000,
+	equipment = {
+		computer     = "misc.autopilot",
+		thruster     = "thruster.default_s1", -- note that this is required for a valid ship start.
+
+	},
+    cargo = {{Commodities.radioactives , 4}},
+
+	pattern     = 2,
+    colors = { Color('FF7F00'), Color('E0E0E0'), Color('0000FF') }
+
 })

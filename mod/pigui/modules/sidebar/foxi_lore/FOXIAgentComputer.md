@@ -2,6 +2,13 @@
 
 **Name:** FOXI (Freelance Operations and eXploration Intelligence)
 
+**Adversary** FOEI - Federation Object Exploration Intelligence ,
+   - Foei was developed by Solar Federation SPIs Capturing some research base. The local base Ai was very 
+      - Aggressive and would often use ships as simple impacters.
+      - Fast, it would simulate entire battle spaces near instantaneously. 
+      - object foei:{ship, target, time, launch, ... idk} It was Optimal
+      - Exploration: it also mined systems
+      - Intelligence: uses the minimal xylopose modified with 2 dual mount missile racks. 
 **Background:**
 
 In the distant future, amidst a galaxy of corporate dominance and shifting alliances, FOXI was developed as an advanced

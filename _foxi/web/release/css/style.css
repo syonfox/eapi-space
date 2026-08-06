@@ -1,0 +1,180 @@
+/* ==========================================================
+   Release Page Styling
+   ========================================================== */
+
+.release-page {
+    min-height: 100vh;
+}
+
+
+/* Header */
+
+.release-header {
+    text-align: center;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    background: var(--header-bg-color);
+    border-radius: var(--size-radius);
+    box-shadow: 0 4px 12px rgba(0,0,0,.15);
+}
+
+.release-header h1 {
+    margin: 0;
+    background: transparent;
+}
+
+.release-name {
+    color: var(--button-text-color);
+    font-size: 1.2rem;
+    opacity: .9;
+}
+
+
+/* Main Layout */
+
+.release-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+
+/* Cards */
+
+.release-card,
+.download-card,
+.github-card {
+    background: var(--color-light);
+    color: var(--text-color);
+    padding: 1.5rem;
+    border-radius: var(--size-radius);
+    border-left: 6px solid var(--primary-color);
+    box-shadow: 0 4px 10px rgba(0,0,0,.12);
+}
+
+
+.release-card h2,
+.download-card h2,
+.github-card h2 {
+    margin-top: 0;
+    background: transparent;
+    color: var(--text-color);
+    padding: 0;
+}
+
+
+/* Release Information */
+
+.release-info {
+    display: grid;
+    grid-template-columns: 120px auto;
+    gap: .75rem;
+    margin-top: 1rem;
+}
+
+
+.release-info dt {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+
+.release-info dd {
+    margin: 0;
+}
+
+
+/* Download Buttons */
+
+.download-button {
+    display: inline-block;
+    padding: .8rem 1.4rem;
+    margin: .5rem .5rem .5rem 0;
+
+    border-radius: var(--size-radius);
+
+    color: var(--button-text-color);
+    background: var(--button-bg-color);
+
+    font-weight: bold;
+
+    transition:
+            background-color .2s ease,
+            transform .2s ease,
+            box-shadow .2s ease;
+}
+
+
+.download-button:hover {
+    color: var(--button-text-color);
+    background: var(--button-hover-bg-color);
+
+    transform: translateY(-2px);
+
+    text-decoration: none;
+
+    box-shadow: 0 5px 15px rgba(0,0,0,.25);
+}
+
+
+/* GitHub Button */
+
+.download-button.github {
+    background: #24292f;
+}
+
+
+.download-button.github:hover {
+    background: #000;
+}
+
+
+/* Mirror Button */
+
+.download-button.mirror {
+    background: var(--primary-color);
+}
+
+
+/* GitHub Information */
+
+.github-card a {
+    font-weight: bold;
+}
+
+
+/* Footer */
+
+.release-footer {
+    margin-top: 3rem;
+    padding: 1rem;
+
+    text-align: center;
+
+    opacity: .7;
+
+    font-size: .9rem;
+}
+
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 10px;
+    }
+
+
+    .release-info {
+        grid-template-columns: 1fr;
+    }
+
+
+    .download-button {
+        display: block;
+        text-align: center;
+        margin-right: 0;
+    }
+
+}

@@ -1,4 +1,4 @@
-
+local M = {} -- my 'Module'
 --
 --local pubRequirements = {
 --    robots = 2,
@@ -31,6 +31,7 @@ local structureRequirements = {
             metal_alloy = 8,          -- 160
             precious_metals = 1       -- 180
         }
+
     },  -- <--- COMMA added here
 
     shack = {
@@ -44,14 +45,16 @@ local structureRequirements = {
             air_processors = 3,
             industrial_machinery = 4, -- 10
             water = 4,
-            metal_alloy = 15           -- 160
+            metal_alloy = 15,           -- 160
+            consumer_goods = 5,
+            precious_metals = 5
         }
     }
 
 }
 
 
-local colonyRequirements = {
+ local colonyRequirements = {
     level0 = {
         name = "pub",
         title = "Syon Pub",
@@ -165,9 +168,45 @@ for i = 0, 4 do
 end
 
 
+M.getRequirements = function(lvl)
+    assert(type(lvl) == "number" and lvl % 1 == 0 and lvl >= 0 and lvl <= 4,
+        "Level must be an integer between 0 and 4")
+
+    return colonyRequirements["level" .. lvl]
+end
 
 -- TODO: make system defence simulation.
 
 -- fibanochi waves increase untill player is foreced out of the system for 2 years..
 -- waves every year. 1, 2, 3, 5, 8, 13, 21, 34, 55
 
+function rmf100(n)
+    if n == 0 then return {} end
+    if n == 1 then return {0} end
+    local a = {0, 1}
+    while #a < n do
+        local divisor = a[#a] % 100
+        if divisor == 0 then divisor = 1 end
+        local next_val = math.floor(a[#a] + a[#a - 1] / divisor + 0.5)
+        table.insert(a, next_val)
+    end
+    return a
+end
+
+
+
+-- assign it to module table (export it)
+M.rmf100 = rmf100
+M.rmf256 = rmf100(256)
+
+-- 0 -> 0 ; 1 -> 1; 2 -> 1
+M.rmfn = function(n)
+    if n < 256 then
+        return M.rmf256[n + 1]  -- Lua is 1-based
+    else
+        local full = M.rmf100(n)
+        return full[#full]      -- last element (like pop without removing)
+    end
+end
+
+return M

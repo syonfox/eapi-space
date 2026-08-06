@@ -22,5 +22,30 @@
   "SYONTRIX_POLICE_INDEF": {
     "description": "ship name - indefinite form",
     "message": "a Syontrix police ship"
+  },
+  "FOEII": {
+      "description": "ship name - base form",
+      "message": "FOEI Interceptor"
+  },
+  "FOEII_DEF": {
+    "description": "ship - definite form",
+    "message": "the Federal Operations Entity Interceptor"
+  },
+  "FOEII_INDEF": {
+    "description": "ship name - indefinite form",
+    "message": "a FOEI Interceptor"
+  },
+  "FOEII_POLICE": {
+    "description": "ship name - base form",
+    "message": "FOEI Interceptor"
+  },
+  "FOEII_POLICE_DEF": {
+    "description": "ship - definite form",
+    "message": "the interceptor police ship"
+  },
+  "FOEII_POLICE_INDEF": {
+    "description": "ship name - indefinite form",
+    "message": "a FOEI Interceptor ship"
   }
+
 }

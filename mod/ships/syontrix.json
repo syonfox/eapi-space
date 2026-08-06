@@ -6,10 +6,10 @@
 	"manufacturer": "foxi",
 	"ship_class": "medium_freighter",
 	"min_crew": 1,
-	"max_crew": 2,
+	"max_crew": 3,
 	"price":124999,
 	"hull_mass": 42,
-	"atmospheric_pressure_limit": 3.2,
+	"atmospheric_pressure_limit": 2.9,
 	"capacity": 550,
 	"cargo": 200,
 	"equipment_slots": {
@@ -137,13 +137,13 @@
 			"type": "cabin",
 			"size": 1
 		},
-		"cabin_s1_3": {
+		"cabin_s2_1": {
 			"type": "cabin",
-			"size": 1
+			"size": 2
 		},
-		"cabin_s1_4": {
+		"cabin_s2_2": {
 			"type": "cabin",
-			"size": 1
+			"size": 2
 		}
 	},
 

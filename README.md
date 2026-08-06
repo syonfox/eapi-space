@@ -24,6 +24,8 @@ git clone https://github.com/syonfox/pioneer.git
 
 cd pioneer 
 
+git checkout constalations ; # Or whatever branch / commit the mod was tested aganst in the release page ;)
+
 ./bootstap.sh
 make clean
 make -j8
@@ -31,11 +33,14 @@ make -j8
 ```
 
 install mod
+
+# [Latest Release Page](https://foxi.eapi.space/release/latest.html)
+
 ```shell
 wget https://github.com/syonfox/eapi-space/archive/refs/heads/main.zip
 wget https://codeload.github.com/syonfox/eapi-space/zip/refs/heads/main -o main.zip
 unzip eapi-space-main.zip
-cp eapi-space-main ~/.pioneer/mods/eapi-space
+cp eapi-space-main/mod ~/.pioneer/mods/eapi-space
 
 #or with git
 cd ~/.pioneer/mods/
@@ -46,7 +51,7 @@ enjoy
 
 ### Sauces
 
-https://foxi.eapi.space
+https://foxi.eapi.space <-- Look here
 
 https://github.com/pioneerspacesim/pioneer
 
@@ -78,7 +83,9 @@ honk=disabled
 ```
 Above is an example of disabling a mod and adjusting the order of mod loading with the index. in the config.
 
-Configure with(https://foxi.eapi.space/local_mod)
+## [Mod Config Tool: foxi.eapi.space/local_mod](https://foxi.eapi.space/local_mod)
+
+The above script lets you turn mods off and on with a UI. Simply upload you config file.
 
 Demo facegen + honk mod 
 ```sh
@@ -93,6 +100,9 @@ wget https://github.com/syonfox/eapi-space/raw/refs/heads/main/_dev/honk.zip
 
 **Use F9-F12 to trigger honk sound in game.**
 
+
+## TODO Writing mod docs.
+
 you can patch language files as per https://github.com/pioneerspacesim/pioneer/issues/5996#event-15861212915
 
 Systems DO NOT override generated systems or partial systems so create new systems or update a partial system by overriding the
@@ -101,10 +111,15 @@ def file in <mods>/systems/partials/???.lua (todo: fix this)
 Tip. You can add a real star to the game and then override this in your mod. (but not generated so ensure you place these at non generated locations.)
 
 
-# Why mod?  
+## Why mod?  
 
 So that you can play around with the systems, ships, etc without git conflict.
 
-# Why not mod? 
+## Why not mod? 
 
-because you need core cpp features.  Add these to the game
+because you need core cpp features.  Add these to the game. 
+
+Caution you can do alot win lua but it has a steap learning curve. Try to be patent and think outside the box of how 
+you can make your experiance fun for users. Peoaple dont want to compile a custom branch but they can copy pasta a zip.
+
+

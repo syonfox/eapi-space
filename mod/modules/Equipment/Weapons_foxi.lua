@@ -9,6 +9,18 @@ local EquipType = require 'EquipType'
 local Equipment  = require 'Equipment'
 local Slot      = require 'HullConfig'.Slot
 local EquipTypes = require '.Types'
+local MissileType = EquipTypes.MissileType
+
+
+Equipment.Register("missile.missile_m2", MissileType.New {
+	l10n_key="MISSILE_MISS",
+	price=200, purchasable=true, tech_level=6,
+	missile_stats = { shipType="missile_miss", guided=true, warheadSize=400.0, fuzeRadius=60.0, effectiveRadius=3000.0, chargeEffectiveness=2.5, ecmResist=2.0 },
+	volume=0, mass=0.2,
+	slot = { type="missile", size=2, hardpoint=true },
+	icon_name="equip_missile_guided"
+})
+
 
 local LaserType = EquipTypes.LaserType
 

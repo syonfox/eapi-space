@@ -146,7 +146,9 @@ local FOXI = {
         init = false,
         dogtags = 0,
         joined = false,
-        rewards_given = {}
+        rewards_given = {},
+        kill_log = {},
+        dogtags = 0
     },
 }
 local myid = 1;
@@ -444,8 +446,12 @@ local function onShipDestroyed(ship, attacker)
     -- CASE 2: Player killed someone
     elseif attackerIsPlayer then
         print("PLAYER GOT THE KILL")
+        if not FOXI.save_data.dogtags then FOXI.save_data.dogtags = 0 end
         FOXI.save_data.dogtags = FOXI.save_data.dogtags + 1;
         -- give credit here
+        -- dogtags*1000 is given to clean pilots
+        -- dogtags<enemy faction>*10000 can be used to pay off fines
+        --
         --return
 
     -- CASE 3: NPC killed NPC
@@ -476,7 +482,7 @@ local function onShipDestroyed(ship, attacker)
         killed,
         killer
     )
-
+    FOXI.save_data.kill_log = FOXI.save_data.kill_log or {} -- ensure table is therw
     table.insert(FOXI.save_data.kill_log, entry)
     print("Kill logged:", entry)
 
@@ -1388,7 +1394,9 @@ function module:drawBody()
 
         local r = FOXI.save_data.rewards_given[key]
         local h = FOXI.save_data.rewards_given[key .. "_hist"]
+        local numh = 0
         if r and h and #h > 0  then
+            numh = #h
             --print("this rewards has been given before:  ".. #h .. " times " .. key .. " has been given, most recent is " .. r )
         end
 
@@ -1399,7 +1407,7 @@ function module:drawBody()
 
 
        -- print(key .. ".ad = " .. reward.ad)
-        ui.textWrapped("["..#h.."]"..reward.ad)
+        ui.textWrapped("["..numh.."]"..reward.ad)
 
         if ui.button(reward.btn) then       -- here we are
             
