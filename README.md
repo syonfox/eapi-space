@@ -6,6 +6,52 @@ Welcome to Pioneer. We hope this mod brings joy to your life.
 
 ### Actions
 
+### 2026 app image release. 
+
+Playable yet fun. not much really take a look at /mod
+
+```
+
+```bash
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+app="$HOME/.local/opt/pioneer/Pioneer-x86_64.AppImage"
+mods="$HOME/.pioneer/mods"
+url="https://github.com/pioneerspacesim/pioneer/releases/download/20260907/Pioneer-x86_64.AppImage"
+mod="https://github.com/syonfox/eapi-space/raw/refs/heads/main/_release/syon_mod_main_2026_08_06.zip"
+
+line=$(printf '%80s' '' | tr ' ' '=')
+box() { printf "| %-76s |\n" "$1"; }
+clear
+printf "+%s+\n" "$line"
+box "PIONEER / SYON                                      SPACE SIM BOOTSTRAP"
+printf "+%s+\n" "$line"
+
+mkdir -p "$(dirname "$app")" "$mods"
+if [[ ! -s "$app" ]]; then
+    box "Downloading Pioneer AppImage..."
+    wget -q --show-progress -O "$app" "$url"
+    chmod +x "$app"
+fi
+box "Pioneer : READY  |  $app"
+if [[ ! -s "$mods/syon_mod_main_2026_08_06.zip" ]]; then
+    read -rp "Install Syon mod? [Y/n] " a
+    if [[ ! "$a" =~ ^[Nn] ]]; then
+        wget -q --show-progress -O "$mods/syon_mod_main_2026_08_06.zip" "$mod"
+    fi
+fi
+box "Syon    : $( [[ -s "$mods/syon_mod_main_2026_08_06.zip" ]] && echo READY || echo SKIPPED )"
+box "Mods    : $mods"
+printf "+%s+\n" "$line"
+read -rp "Launch Pioneer? [Y/n] " a
+[[ "$a" =~ ^[Nn] ]] || "$app" &
+```
+
+```
+
+#### Build in c++
+
 install pioneer
 ```shell
 echo "installing dependencies for pioneer"
